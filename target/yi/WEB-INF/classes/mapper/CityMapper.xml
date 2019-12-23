@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yi.dao.CityDao">
+    <!--按省份查询城市-->
+    <select id="selectcityByhenan" resultType="City">
+        select c.cityname from city c,province p where p.id=c.pid and p.pname='河南'
+    </select>
+    <select id="selectcityByzhejiang" resultType="City">
+        select c.cityname from city c,province p where p.id=c.pid and p.pname='浙江'
+    </select>
+    <select id="selectcityByshandong" resultType="City">
+        select c.cityname from city c,province p where p.id=c.pid and p.pname='山东'
+    </select>
+    <select id="selectcityBysichuan" resultType="City">
+        select c.cityname from city c,province p where p.id=c.pid and p.pname='四川'
+    </select>
+    <select id="selectcityByjiangsu" resultType="City">
+        select c.cityname from city c,province p where p.id=c.pid and p.pname='江苏'
+    </select>
+    <select id="selectcityByguangdong" resultType="City">
+        select c.cityname from city c,province p where p.id=c.pid and p.pname='广东'
+    </select>
+
+    <!--查询菜系名称-->
+    <select id="selectCuidisne" resultType="Cuidsine">
+        select cname from cuidsine;
+    </select>
+
+    <!--按当前城市名称查询所在省份的所有城市-->
+    <select id="selectcityBycity" parameterType="City" resultType="City">
+        select c.cityname from city c,province p where p.id=c.pid and p.pname in(select p.pname from city c,province p where p.id=c.pid and c.cityname=#{cityname})
+    </select>
+
+    <!--按菜系名称查询餐馆数量-->
+    <select id="selectrestauantcountBycuidisine" parameterType="string" resultType="int">
+        select count(r.id) from cuidsine c,restaurant r,cuidsinerestaurant cr where cr.cuidsineid=c.id and cr.restaurantid=r.id and c.cname=#{name}
+    </select>
+    <!--按菜系名称查询餐馆-->
+    <select id="selectrestauantBycuidisine" parameterType="UtilFenye" resultType="Restaurant">
+        select r.* from cuidsine c,restaurant r,cuidsinerestaurant cr where cr.cuidsineid=c.id and cr.restaurantid=r.id and c.cname=#{name} limit #{d1},#{d2}
+    </select>
+    <!--按城市名称查询餐馆数量-->
+    <select id="selectrestauantcountBycity" parameterType="string" resultType="int">
+        select count(r.id) from city c,restaurant r,cuidsinerestaurant cr where cr.cuidsineid=c.id and cr.restaurantid=r.id and c.cityname=#{name}
+    </select>
+    <!--按城市名称查询餐馆-->
+    <select id="selectrestauantBycity" parameterType="UtilFenye" resultType="Restaurant">
+        select r.* from city c,restaurant r,cuidsinerestaurant cr where cr.cuidsineid=c.id and cr.restaurantid=r.id and c.cityname=#{name} limit #{d1},#{d2}
+    </select>
+</mapper>
