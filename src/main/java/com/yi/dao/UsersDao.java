@@ -9,12 +9,16 @@ import java.util.List;
 @Mapper
 @Repository
 public interface UsersDao {
-    //登录
+    /**
+     * 登录
+     */
     List<Users> selectUsers(Users users);
-
-    //注册
+    /**
+     * 注册
+     */
     void insertUsers(Users users);
-
-    //用户修改信息
+    /**
+     * 用户修改信息
+     */
     void updateUsers(Users users);
 }

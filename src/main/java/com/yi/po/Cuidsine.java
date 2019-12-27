@@ -1,6 +1,9 @@
 package com.yi.po;
 
-//菜系实体类
+/**
+ *菜系实体类
+ *@author 86132
+ */
 public class Cuidsine {
     private int id;
     private String cname;

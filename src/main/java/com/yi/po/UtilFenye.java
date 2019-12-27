@@ -1,5 +1,9 @@
 package com.yi.po;
 
+/**
+ * @author yisy
+ * 分页条件参数
+ */
 public class UtilFenye {
     private int d1;
     private int d2;

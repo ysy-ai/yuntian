@@ -49,7 +49,7 @@
                 #{password},
             </if>
             <if test="headPortraint != null">
-                #{headPortraint},
+                #{headPortrait},
             </if>
             <if test="birthday != null">
                 #{birthday},

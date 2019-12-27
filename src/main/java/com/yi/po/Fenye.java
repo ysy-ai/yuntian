@@ -3,11 +3,26 @@ package com.yi.po;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author yisy
+ */
 public class Fenye {
-    private int pageCount;  //一页显示多少条数据
-    private int pageNow;    //从页面中获取
-    private int totalCount; //数据库中一共有多少条数据
-    private int page;       //总页面数
+    /**
+     *一页显示多少条数据
+     */
+    private int pageCount;
+    /**
+     *从页面中获取
+     */
+    private int pageNow;
+    /**
+     *数据库中一共有多少条数据
+     */
+    private int totalCount;
+    /**
+     * 总页面数
+     */
+    private int page;
     private List<Restaurant> list=new ArrayList<Restaurant>();
     private String url;
 

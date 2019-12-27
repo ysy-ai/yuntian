@@ -6,6 +6,9 @@ import com.yi.service.UsersService;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+/**
+ * @author yisy
+ */
 @Service
 public class UsersServiceImpl implements UsersService {
 
@@ -13,21 +16,24 @@ public class UsersServiceImpl implements UsersService {
     public UsersServiceImpl(UsersDao usersDao) {
         this.usersDao = usersDao;
     }
-
-    //查询用户所有信息
+    /**
+     * 查询用户所有信息
+     */
     @Override
     public Users selectUsers(Users users) {
         return usersDao.selectUsers(users).get(0);
     }
-
-    //验证用户名
+    /**
+     * 验证用户名
+     */
     @Override
     public boolean selectTel(Users users) {
         List<Users> users1 = usersDao.selectUsers(users);
         return users1.size() == 0;
     }
-
-    //验证密码
+    /**
+     * 验证密码
+     */
     @Override
     public boolean selectPassword(Users users) {
         List<Users> users1 = usersDao.selectUsers(users);
@@ -36,14 +42,16 @@ public class UsersServiceImpl implements UsersService {
         }
         return false;
     }
-
-    //注册
+    /**
+     * 注册
+     */
     @Override
     public void insertUsers(Users users) {
         usersDao.insertUsers(users);
     }
-
-    //用户修改信息
+    /**
+     * 用户修改信息
+     */
     @Override
     public void updateUsers(Users users) {
         usersDao.updateUsers(users);

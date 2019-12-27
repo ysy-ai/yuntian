@@ -1,6 +1,9 @@
 package com.yi.po;
 
-//城市实体类
+/**
+ *城市实体类
+ * @author yisy
+ */
 public class City {
     private int id;
     private String cityname;

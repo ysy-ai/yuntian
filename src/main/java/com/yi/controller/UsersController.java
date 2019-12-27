@@ -17,16 +17,22 @@ import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 
+/**
+ * @author yisy
+ */
 @Controller
-//@RequestMapping("/users")
 public class UsersController {
-    //自动注入
+    /**
+     *自动注入
+     */
     private final UsersService usersService;
     public UsersController(UsersService usersService) {
         this.usersService = usersService;
     }
 
-    //判断是否登录
+    /**
+     *判断是否登录
+     */
     @RequestMapping("/Judgementlogin")
     public String Judgementlogin (HttpServletRequest request) {
         String username = new String(request.getParameter("username").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
@@ -38,8 +44,10 @@ public class UsersController {
         return "yuantian";
     }
 
-    //用户登录
-    //验证用户名是否存在
+    /**
+     *用户登录
+     *验证用户名是否存在
+     */
     @RequestMapping(value = "/validateUser",method = RequestMethod.POST,produces = {"text/html;charset=utf-8"})
     public @ResponseBody String validateUser (Users users) {
         boolean flag = usersService.selectTel(users);
@@ -48,7 +56,9 @@ public class UsersController {
         }
         return " ";
     }
-    //验证密码
+    /**
+     *验证密码
+     */
     @RequestMapping(value = "/validatePassword",method = RequestMethod.POST)
     public String validatePassword (Users users,HttpServletRequest request) {
         boolean flag = usersService.selectPassword(users);
@@ -69,7 +79,9 @@ public class UsersController {
         return "login";
     }
 
-    //用户注册
+    /**
+     *用户注册
+     */
     @RequestMapping("/Register")
     public String Register (Users users,HttpServletRequest request) {
         if (usersService.selectTel(users)) {
@@ -80,7 +92,9 @@ public class UsersController {
         return "login";
     }
 
-    //个人信息设置
+    /**
+     *个人信息设置
+     */
     @RequestMapping("/getPersonMessage")
     public String getPersonMessage (Users users,HttpServletRequest request) {
         String username = new String(request.getParameter("username").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
@@ -90,7 +104,9 @@ public class UsersController {
         return "personMessage";
     }
 
-    //上传头像
+    /**
+     *上传头像
+     */
     @RequestMapping("/upload")
     public String upload (@PathVariable MultipartFile file, Users users, HttpServletRequest request, Model model) throws IOException {
         System.out.println(file);

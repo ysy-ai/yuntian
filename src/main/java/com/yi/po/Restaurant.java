@@ -1,19 +1,36 @@
 package com.yi.po;
 
+/**
+ * @author yisy
+ */
 public class Restaurant {
-    //主键id
+    /**
+     * 主键id
+     */
     private int id;
-    //餐馆名称
+    /**
+     * 餐馆名称
+     */
     private String rname;
-    //评分
+    /**
+     * 评分
+     */
     private int score;
-    //评论数量
+    /**
+     * 评论数量
+     */
     private int commentcount;
-    //餐馆地址
+    /**
+     * 餐馆地址
+     */
     private String address;
-    //餐馆图片
+    /**
+     * 餐馆图片
+     */
     private String url;
-    //人均价格
+    /**
+     * 人均价格
+     */
     private Double perprice;
 
     public Restaurant(){}

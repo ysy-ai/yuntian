@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+/**
+ * @author yisy
+ */
 @Controller
 public class CityController {
     //自动注入
@@ -20,7 +23,9 @@ public class CityController {
         this.cityService = cityService;
     }
 
-    //主页默认展示
+    /**
+     * 主页默认展示
+     */
     @RequestMapping("/toMain")
     public String toMain (HttpServletRequest request) {
         request.getSession().setAttribute("city","息县");
@@ -36,7 +41,9 @@ public class CityController {
         return "main1";
     }
 
-    //按省份查询城市
+    /**
+     * 按省份查询城市
+     */
     @RequestMapping("/selectcityByprovince")
     public String selectcityByprovince (HttpServletRequest request) {
         //经常访问的城市
@@ -60,7 +67,9 @@ public class CityController {
         return "city";
     }
 
-    //获取城市名称
+    /**
+     * 获取城市名称
+     */
     @RequestMapping("/getCityname")
     public String getCityname (String cityname1,HttpServletRequest request) {
         if (cityname1!=null) {
@@ -87,7 +96,9 @@ public class CityController {
         return "main1";
     }
 
-    //根据菜系名称或城市名称查询餐馆
+    /**
+     * 根据菜系名称或城市名称查询餐馆
+     */
     @RequestMapping("/getRestauantBycuidisine")
     public String getRestauantBycuidisine (UtilFenye utilFenye, HttpServletRequest request) {
         String name = new String(utilFenye.getName().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
@@ -98,7 +109,9 @@ public class CityController {
         return "main1";
     }
 
-    //根据城市名称查询餐馆
+    /**
+     * 根据城市名称查询餐馆
+     */
     @RequestMapping("/getRestauantBycity")
     public String getRestauantBycity (UtilFenye utilFenye,HttpServletRequest request) {
         utilFenye.setName(request.getParameter("name"));

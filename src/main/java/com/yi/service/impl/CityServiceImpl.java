@@ -7,15 +7,21 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author yisy
+ */
 @Service
 public class CityServiceImpl implements CityService {
-    //自动注入
+    /**
+     * 自动注入
+     */
     private final CityDao cityDao;
     public CityServiceImpl(CityDao cityDao) {
         this.cityDao = cityDao;
     }
-
-    //按省份查询城市
+    /**
+     * 按省份查询城市
+     */
     @Override
     public List<List> selectcityByprovince() {
         List list = new ArrayList();
@@ -33,23 +39,26 @@ public class CityServiceImpl implements CityService {
         list.add(guangdong);
         return list;
     }
-
-    //查询菜系名称
+    /**
+     * 查询菜系名称
+     */
     @Override
     public List<Cuidsine> selectCuidisne() {
         List<Cuidsine> cuidsines = cityDao.selectCuidisne();
         return cuidsines;
     }
-
-    //按当前城市名称查询所在省份的所有城市
+    /**
+     * 按当前城市名称查询所在省份的所有城市
+     */
     @Override
     public List<City> selectcityBycity(City city) {
         System.out.println(cityDao.selectcityBycity(city).size());
         List<City> cities = cityDao.selectcityBycity(city);
         return cities;
     }
-
-    //按菜系名称查询餐馆
+    /**
+     * 按菜系名称查询餐馆
+     */
     @Override
     public Fenye selectrestauantBycuidisine(UtilFenye utilFenye) {
         System.out.println(utilFenye.getName());
@@ -71,7 +80,9 @@ public class CityServiceImpl implements CityService {
         return fenye;
     }
 
-    //按城市名称查询餐馆
+    /**
+     * 按城市名称查询餐馆
+     */
     @Override
     public Fenye selectrestauantBycity(UtilFenye utilFenye) {
         Fenye fenye=new Fenye();

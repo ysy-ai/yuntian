@@ -8,10 +8,15 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
+/**
+ * @author 86132
+ */
 @Mapper
 @Repository
 public interface CityDao {
-    //按省份查询城市
+    /**
+     * 按省份查询城市
+     */
     List<City> selectcityByhenan();
     List<City> selectcityByzhejiang();
     List<City> selectcityByshandong();
@@ -19,18 +24,28 @@ public interface CityDao {
     List<City> selectcityByjiangsu();
     List<City> selectcityByguangdong();
 
-    //查询菜系名称
+    /**
+     * 查询菜系名称
+     */
     List<Cuidsine> selectCuidisne();
-
-    //按当前城市名称查询所在省份的所有城市
+    /**
+     * 按当前城市名称查询所在省份的所有城市
+     */
     List<City> selectcityBycity(City city);
-
-    //按菜系名称查询餐馆数量
+    /**
+     * 按菜系名称查询餐馆数量
+     */
     int selectrestauantcountBycuidisine(String cname);
-    //按菜系名称查询餐馆
+    /**
+     * 按菜系名称查询餐馆
+     */
     List<Restaurant> selectrestauantBycuidisine(UtilFenye utilFenye);
-    //按城市名称查询餐馆数量
+    /**
+     * 按城市名称查询餐馆数量
+     */
     int selectrestauantcountBycity(String cityname);
-    //按城市名称查询餐馆
+    /**
+     * 按城市名称查询餐馆
+     */
     List<Restaurant> selectrestauantBycity(UtilFenye utilFenye);
 }

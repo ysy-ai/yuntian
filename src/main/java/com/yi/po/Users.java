@@ -2,23 +2,39 @@ package com.yi.po;
 
 import org.springframework.web.multipart.MultipartFile;
 
-//用户实体类
+/**
+ * @author yisy
+ * 用户实体类
+ */
 public class Users{
     private int id;
-    //手机号
+    /**
+     * 手机号
+     */
     private String tel;
-    //昵称
+    /**
+     * 昵称
+     */
     private String username;
-    //密码
+    /**
+     * 密码
+     */
     private String password;
-    //头像
+    /**
+     * 头像
+     */
     private String headPortrait;
-    //生日
+    /**
+     * 生日
+     */
     private String birthday;
-    //用户标识  0：普通用户  1：商家
+    /**
+     * 用户标识  0：普通用户  1：商家
+     */
     private String status;
-
-    //辅助图片上传属性
+    /**
+     * 辅助图片上传属性
+     */
     private MultipartFile file;
 
     public Users(){}
