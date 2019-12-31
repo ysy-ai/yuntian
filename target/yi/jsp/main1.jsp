@@ -39,17 +39,18 @@
         <a>价格</a>
         <a>好评最多</a>
     </div>
-    <div style="margin-left: 350px;margin-top: 20px;width: 1100px;height: 60px;line-height: 60px;float: left">
-        <c:forEach items="${fenye.list }" var="restaurant">
-            <div style="width: 700px;height:300px;border: 1px solid red;">
-                <div id="img1" style="width: 300px;height: 300px">
-                    <ul style="list-style: none">
-                        <li>${restaurant.rname }</li>
-                    </ul>
+
+            <c:forEach items="${fenye.list }" var="restaurant">
+                <div style="width: 700px;height:300px;border: 1px solid red;float: left;margin-top: 20px">
+                    <div id="img1" style="width: 300px;height: 300px;">
+                        <ul style="list-style: none">
+                            <li>${restaurant.rname }</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </c:forEach>
-        <div style="margin-top: 30px">
+            </c:forEach>
+
+            <div style="margin-top: 30px;margin-top: 20px;float: left">
             <c:if test="${fenye.pageNow>1 }">
                 [<a href="${pageContext.request.contextPath}/getRestauantBycuidisine?pageNow=${fenye.pageNow-1 }&&name=${cuidsines.cname }">上一页</a>]
             </c:if>
@@ -64,20 +65,19 @@
                     ${i }
                 </c:if>
                 <c:if test="${!(fenye.pageNow eq i )}">
-                    [<a href="${pageContext.request.contextPath}/getRestauantBycuidisine?pageNow=${fenye.pageNow-1 }&name=${cuidsines.cname }">${i }</a>]
+                    [<a href="${pageContext.request.contextPath}/getRestauantBycuidisine?pageNow=${fenye.pageNow-1 }<%--&&name=${cuidsines.cname }--%>">${i }</a>]
                 </c:if>
             </c:forEach>
 
             <c:choose>
                 <c:when test="${fenye.pageNow>=fenye.page }">
-                    [<a href="${pageContext.request.contextPath}/getRestauantBycuidisine?pageNow=${fenye.pageNow-1 }&name=${cuidsines.cname }">下一页</a>]
+                    [<a href="${pageContext.request.contextPath}/getRestauantBycuidisine?pageNow=${fenye.pageNow-1 }<%--&&name=${cuidsines.cname }--%>">下一页</a>]
                 </c:when>
                 <c:otherwise>
-                    [<a href="${pageContext.request.contextPath}/getRestauantBycuidisine?pageNow=${fenye.pageNow-1 }&name=${cuidsines.cname }">下一页</a>]
+                    [<a href="${pageContext.request.contextPath}/getRestauantBycuidisine?pageNow=${fenye.pageNow-1 }<%--&&name=${cuidsines.cname }--%>">下一页</a>]
                 </c:otherwise>
             </c:choose>
         </div>
-    </div>
 </div>
 </body>
 </html>

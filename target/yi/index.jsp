@@ -11,6 +11,6 @@
     <title>云天美食</title>
 </head>
 <body>
-<a href="toMain"><img src="images/welcome1.jpg" style="width: 100%;height: 100%" alt=""></a>
+<a href="toMain?pageNow=1"><img src="images/welcome1.jpg" style="width: 100%;height: 100%" alt=""></a>
 </body>
 </html>

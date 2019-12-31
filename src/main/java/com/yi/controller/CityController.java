@@ -27,7 +27,7 @@ public class CityController {
      * 主页默认展示
      */
     @RequestMapping("/toMain")
-    public String toMain (HttpServletRequest request) {
+    public String toMain (UtilFenye utilFenye,HttpServletRequest request) {
         request.getSession().setAttribute("city","息县");
         request.getSession().setAttribute("username","立即登录");
         //查询菜系
@@ -36,8 +36,13 @@ public class CityController {
         City city = new City();
         city.setCityname("息县");
         List<City> cities = cityService.selectcityBycity(city);
+        //按城市名称查询餐馆
+        utilFenye.setName("息县");
+        utilFenye.setPageNow(Integer.parseInt(request.getParameter("pageNow")));
+        Fenye fenye = cityService.selectrestauantBycity(utilFenye);
         request.getSession().setAttribute("cuidsines",cuidsines);
         request.getSession().setAttribute("cities",cities);
+        request.getSession().setAttribute("fenye",fenye);
         return "main1";
     }
 
@@ -84,7 +89,8 @@ public class CityController {
             request.getSession().setAttribute("cities",cities);
         }
         //isEmpty():判断字符串是否为null
-        if (!request.getParameter("cityname").isEmpty()&&request.getParameter("cityname")!=null&&!request.getParameter("cityname").equals("null")) {
+        String str = "cityname";
+        if (!request.getParameter(str).isEmpty()&&request.getParameter(str)!=null&&!request.getParameter(str).equals("null")) {
             //按当前城市名称查询所在省份的所有城市
             String cityname = new String(request.getParameter("cityname").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
             City city = new City();

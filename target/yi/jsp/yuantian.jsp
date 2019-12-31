@@ -41,7 +41,7 @@
 </div>
 hahah${username}哈哈哈
 <div style="height: 200px;width: 800px;background:yellow;float: left;margin-left: 15px">
-    <img style="width: 100px;height: 100px;float: left;margin-top: 35px;margin-left: 30px" alt="" src="${img }">
+    <img style="width: 100px;height: 100px;float: left;margin-top: 35px;margin-left: 30px" alt="" src="${users.headPortrait}">
     <div style="margin-top: 65px;margin-left: 150px"><a style="text-decoration: none" href="user/selectuser">${username }</a></div>
 
     <a style="margin-left: 460px;text-decoration: none" href="/getPersonMessage?username=${username}">个人信息设置></a>

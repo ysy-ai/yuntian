@@ -168,7 +168,7 @@
 
 </head>
 <body>
-<form class="form1" action="/Register" method="post">
+<form class="form1" action="/register" method="post">
     手机号：　<label for="tel"></label><input id="tel" type="text" name="tel" value=""><strong id="d1" style="color: red"></strong><br>
     密码：　　<label for="password"></label><input id="password" type="password" name="password" value=""><br>
     确认密码：<label for="password1"></label><input id="password1" type="password" name="" value=""><br>

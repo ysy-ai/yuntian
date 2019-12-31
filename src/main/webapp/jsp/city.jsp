@@ -55,7 +55,7 @@
 <br><br>
 <div style="margin-left: 350px;width: 1100px;height: 1000px;border: #A9A9A9 solid 1px">
     <div style="width: 1000px;height: 100px;margin-left: 50px;border-bottom: #A9A9A9 solid 1px;line-height: 100px;float: left">
-        <form action="/getCityname?cityname=null" method="post" >
+        <form action="getCityname?cityname=null" method="post" >
             按省份选择：
             <select style="height: 30px;width: 100px" name="province" id="province" onfocus="f1()" onchange="f2()">
                 <option value="">选择省份</option>
@@ -70,47 +70,47 @@
     </div>
 
     <div style="width: 1000px;height: 100px;margin-left: 50px;border-bottom: #A9A9A9 solid 1px;line-height:100px;float: left">
-        热门城市：<a id="a1" href="/getCityname?cityname=息县" style="margin-left: 25px">息县</a> <a id="a2" href="/getCityname?cityname=信阳" style="margin-left: 25px">信阳</a><a id="a3" href="/getCityname?cityname=嘉兴" style="margin-left: 25px">嘉兴</a><a id="a4" href="/getCityname?cityname=杭州" style="margin-left: 25px">杭州</a><a id="a5" href="/getCityname?cityname=成都" style="margin-left: 25px">成都</a>
+        热门城市：<a id="a1" href="getCityname?cityname=息县" style="margin-left: 25px">息县</a> <a id="a2" href="getCityname?cityname=信阳" style="margin-left: 25px">信阳</a><a id="a3" href="getCityname?cityname=嘉兴" style="margin-left: 25px">嘉兴</a><a id="a4" href="getCityname?cityname=杭州" style="margin-left: 25px">杭州</a><a id="a5" href="getCityname?cityname=成都" style="margin-left: 25px">成都</a>
     </div>
 
     <div style="width: 1000px;height: 100px;margin-left: 50px;border-bottom: #A9A9A9 solid 1px;line-height:100px;float: left">
-        最近访问：<a id="a6" href="/getCityname?cityname=${city1}" style="margin-left: 25px">${city1}</a>
+        最近访问：<a id="a6" href="getCityname?cityname=${city1}" style="margin-left: 25px">${city1}</a>
     </div>
 
     <div style="width: 1000px;height: 50px;margin-left: 50px;line-height:50px;float: left">按城市选择：</div>
     <div style="width: 1000px;height: 100px;margin-left: 50px;line-height:100px;float: left">
         河南：<c:forEach items="${henan}" var="henan">
-               <a id="a7" href="/getCityname?cityname=${henan.cityname}" style="margin-left: 25px">${henan.cityname}</a>
+               <a id="a7" href="getCityname?cityname=${henan.cityname}" style="margin-left: 25px">${henan.cityname}</a>
               </c:forEach>
     </div>
 
     <div style="width: 1000px;height: 100px;margin-left: 50px;line-height:100px;float: left">
     浙江：<c:forEach items="${zhejiang}" var="zhejiang">
-           <a id="a8" href="/getCityname?cityname=${zhejiang.cityname}" style="margin-left: 25px">${zhejiang.cityname}</a>
+           <a id="a8" href="getCityname?cityname=${zhejiang.cityname}" style="margin-left: 25px">${zhejiang.cityname}</a>
           </c:forEach>
     </div>
 
     <div style="width: 1000px;height: 100px;margin-left: 50px;line-height:100px;float: left">
     山东：<c:forEach items="${shandong}" var="shandong">
-           <a id="a9" href="/getCityname?cityname=${shandong.cityname}" style="margin-left: 25px">${shandong.cityname}</a>
+           <a id="a9" href="getCityname?cityname=${shandong.cityname}" style="margin-left: 25px">${shandong.cityname}</a>
           </c:forEach>
     </div>
 
     <div style="width: 1000px;height: 100px;margin-left: 50px;line-height:100px;float: left">
     四川：<c:forEach items="${sichuan}" var="sichuan">
-           <a id="a10" href="/getCityname?cityname=${sichuan.cityname}" style="margin-left: 25px">${sichuan.cityname}</a>
+           <a id="a10" href="getCityname?cityname=${sichuan.cityname}" style="margin-left: 25px">${sichuan.cityname}</a>
           </c:forEach>
     </div>
 
     <div style="width: 1000px;height: 100px;margin-left: 50px;line-height:100px;float: left">
     江苏：<c:forEach items="${jiangsu}" var="jiangsu">
-           <a id="a11" href="/getCityname?cityname=${jiangsu.cityname}" style="margin-left: 25px">${jiangsu.cityname}</a>
+           <a id="a11" href="getCityname?cityname=${jiangsu.cityname}" style="margin-left: 25px">${jiangsu.cityname}</a>
           </c:forEach>
     </div>
 
     <div style="width: 1000px;height: 100px;margin-left: 50px;line-height:100px;float: left">
     广东：<c:forEach items="${guangdong}" var="guangdong">
-            <a id="a12" href="/getCityname?cityname=${guangdong.cityname}" style="margin-left: 25px">${guangdong.cityname}</a>
+            <a id="a12" href="getCityname?cityname=${guangdong.cityname}" style="margin-left: 25px">${guangdong.cityname}</a>
           </c:forEach>
     </div>
 

@@ -44,17 +44,14 @@ public class CityServiceImpl implements CityService {
      */
     @Override
     public List<Cuidsine> selectCuidisne() {
-        List<Cuidsine> cuidsines = cityDao.selectCuidisne();
-        return cuidsines;
+        return cityDao.selectCuidisne();
     }
     /**
      * 按当前城市名称查询所在省份的所有城市
      */
     @Override
     public List<City> selectcityBycity(City city) {
-        System.out.println(cityDao.selectcityBycity(city).size());
-        List<City> cities = cityDao.selectcityBycity(city);
-        return cities;
+        return cityDao.selectcityBycity(city);
     }
     /**
      * 按菜系名称查询餐馆
@@ -64,8 +61,6 @@ public class CityServiceImpl implements CityService {
         System.out.println(utilFenye.getName());
         Fenye fenye=new Fenye();
         fenye.setPageCount(2);
-        //一页数量
-        int PageCount=fenye.getPageCount();
         //总条数
         int totalCount=cityDao.selectrestauantcountBycuidisine(utilFenye.getName());
         fenye.setTotalCount(totalCount);
@@ -87,8 +82,6 @@ public class CityServiceImpl implements CityService {
     public Fenye selectrestauantBycity(UtilFenye utilFenye) {
         Fenye fenye=new Fenye();
         fenye.setPageCount(2);
-        //一页数量
-        int PageCount=fenye.getPageCount();
         //总条数
         int totalCount=cityDao.selectrestauantcountBycity(utilFenye.getName());
         fenye.setTotalCount(totalCount);
