@@ -16,6 +16,7 @@ import java.util.List;
 public interface CityDao {
     /**
      * 按省份查询城市
+     * @return City 城市实体类
      */
     List<City> selectcityByhenan();
     List<City> selectcityByzhejiang();
@@ -26,6 +27,7 @@ public interface CityDao {
 
     /**
      * 查询菜系名称
+     * @return Cuidsine 菜系实体类
      */
     List<Cuidsine> selectCuidisne();
     /**

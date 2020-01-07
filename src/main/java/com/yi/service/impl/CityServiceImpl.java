@@ -58,7 +58,6 @@ public class CityServiceImpl implements CityService {
      */
     @Override
     public Fenye selectrestauantBycuidisine(UtilFenye utilFenye) {
-        System.out.println(utilFenye.getName());
         Fenye fenye=new Fenye();
         fenye.setPageCount(2);
         //总条数

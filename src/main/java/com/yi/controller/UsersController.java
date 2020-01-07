@@ -22,11 +22,9 @@ public class UsersController {
      * 自动注入
      */
     private final UsersService usersService;
-
     public UsersController(UsersService usersService) {
         this.usersService = usersService;
     }
-
     /**
      * 判断是否登录
      */
@@ -106,6 +104,13 @@ public class UsersController {
         request.getSession().setAttribute("users", users1);
         return "personMessage";
     }
+    /**
+     * 跳转我的云天界面
+     *//*
+    @RequestMapping("/yuantian")
+    public String yuantian(){
+        return "yuantian";
+    }*/
 
     /**
      * 上传头像
@@ -114,12 +119,10 @@ public class UsersController {
     public String upload(MultipartFile file, Users users, HttpServletRequest request) {
         // 获得原始文件名
         String fileName = file.getOriginalFilename();
-        System.out.println("原始文件名:" + fileName);
         // 新文件名
         String newFileName = request.getSession().getAttribute("username") + ".jpg";
         // 获得项目的路径
         ServletContext sc = request.getSession().getServletContext();
-        System.out.println(sc);
         // 上传位置
         // 设定文件保存的目录
         String path = "C:/Users/86132/IdeaProjects/yidemo1/src/main/webapp/images";

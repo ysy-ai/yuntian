@@ -1,10 +1,8 @@
 package com.yi.controller;
 
-import com.yi.po.City;
-import com.yi.po.Cuidsine;
-import com.yi.po.Fenye;
-import com.yi.po.UtilFenye;
+import com.yi.po.*;
 import com.yi.service.CityService;
+import com.yi.service.RestaurantService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -17,10 +15,14 @@ import java.util.List;
  */
 @Controller
 public class CityController {
-    //自动注入
+    /**
+     * 自动注入
+     */
     private final CityService cityService;
-    public CityController(CityService cityService) {
+    private final RestaurantService restaurantService;
+    public CityController(CityService cityService,RestaurantService restaurantService) {
         this.cityService = cityService;
+        this.restaurantService=restaurantService;
     }
 
     /**
@@ -40,6 +42,9 @@ public class CityController {
         utilFenye.setName("息县");
         utilFenye.setPageNow(Integer.parseInt(request.getParameter("pageNow")));
         Fenye fenye = cityService.selectrestauantBycity(utilFenye);
+        for (Restaurant restaurant:fenye.getList()) {
+            restaurant.setCommentcount(restaurantService.selectCountComment(restaurant.getRname()));
+        }
         request.getSession().setAttribute("cuidsines",cuidsines);
         request.getSession().setAttribute("cities",cities);
         request.getSession().setAttribute("fenye",fenye);
@@ -111,6 +116,9 @@ public class CityController {
         utilFenye.setName(name);
         utilFenye.setPageNow(Integer.parseInt(request.getParameter("pageNow")));
         Fenye fenye = cityService.selectrestauantBycuidisine(utilFenye);
+        for (Restaurant restaurant:fenye.getList()) {
+            restaurant.setCommentcount(restaurantService.selectCountComment(restaurant.getRname()));
+        }
         request.getSession().setAttribute("fenye",fenye);
         return "main1";
     }
@@ -123,6 +131,9 @@ public class CityController {
         utilFenye.setName(request.getParameter("name"));
         utilFenye.setPageNow(Integer.parseInt(request.getParameter("pageNow")));
         Fenye fenye = cityService.selectrestauantBycity(utilFenye);
+        for (Restaurant restaurant:fenye.getList()) {
+            restaurant.setCommentcount(restaurantService.selectCountComment(restaurant.getRname()));
+        }
         request.getSession().setAttribute("fenye",fenye);
         return "main1";
     }

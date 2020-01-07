@@ -93,7 +93,7 @@
     </bean>
     <!--创建dao层对象 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <!-- 扫描 com.baifen.dao包下的所有接口,由spring帮我们创建接口的代理对象,代理对象的名称为接口的名称首字母小写 -->
+        <!-- 扫描 com.yi.dao包下的所有接口,由spring帮我们创建接口的代理对象,代理对象的名称为接口的名称首字母小写 -->
         <property name="basePackage" value="com.yi.dao"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>

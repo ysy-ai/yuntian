@@ -39,14 +39,19 @@
         <a>价格</a>
         <a>好评最多</a>
     </div>
-
             <c:forEach items="${fenye.list }" var="restaurant">
-                <div style="width: 700px;height:300px;border: 1px solid red;float: left;margin-top: 20px">
-                    <div id="img1" style="width: 300px;height: 300px;">
-                        <ul style="list-style: none">
-                            <li>${restaurant.rname }</li>
-                        </ul>
-                    </div>
+                <div style="width: 700px;height:250px;border-bottom: 1px solid silver;float: left;margin-top: 20px">
+                        <a href="showDish?rname=${restaurant.rname }"><img style="width:250px;height: 250px;float: left;" src="${restaurant.url}"/></a>
+                        <div style="width:250px;height: 250px;float: left;">
+                            <ul style="list-style: none;">
+                                <li><h3>${restaurant.rname }</h3></li>
+                                <li>人均:${restaurant.perprice }</li>
+                                <li>评分:${restaurant.score }</li>
+                                <li>评论数量:${restaurant.commentcount }条评论</li>
+                                <li>地址:${restaurant.address }</li>
+                                <li>电话:${restaurant.tel }</li>
+                            </ul>
+                        </div>
                 </div>
             </c:forEach>
 
@@ -59,7 +64,6 @@
                 <c:set var="begin" value="1"/>
                 <c:set var="end" value="${fenye.page}"/>
             </c:if>
-
             <c:forEach var="i" begin="${begin }" end="${end }">
                 <c:if test="${fenye.pageNow eq i }">
                     ${i }
@@ -79,5 +83,6 @@
             </c:choose>
         </div>
 </div>
+<div style="margin-left: 350px;width: 700px;height: 200px;float: left"></div>
 </body>
 </html>

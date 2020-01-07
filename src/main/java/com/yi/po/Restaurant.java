@@ -25,6 +25,10 @@ public class Restaurant {
      */
     private String address;
     /**
+     * 电话
+     */
+    private String tel;
+    /**
      * 餐馆图片
      */
     private String url;
@@ -35,13 +39,15 @@ public class Restaurant {
 
     public Restaurant(){}
 
-    public Restaurant(int id, String rname, int score, int commentcount, String address, String url) {
+    public Restaurant(int id, String rname, int score, int commentcount, String address, String tel, String url, Double perprice) {
         this.id = id;
         this.rname = rname;
         this.score = score;
         this.commentcount = commentcount;
         this.address = address;
+        this.tel = tel;
         this.url = url;
+        this.perprice = perprice;
     }
 
     public int getId() {
@@ -84,6 +90,14 @@ public class Restaurant {
         this.address = address;
     }
 
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -108,6 +122,7 @@ public class Restaurant {
                 ", score=" + score +
                 ", commentcount=" + commentcount +
                 ", address='" + address + '\'' +
+                ", tel='" + tel + '\'' +
                 ", url='" + url + '\'' +
                 ", perprice=" + perprice +
                 '}';
