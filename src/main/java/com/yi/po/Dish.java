@@ -1,4 +1,8 @@
 package com.yi.po;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author yisy
  * 菜品实体类

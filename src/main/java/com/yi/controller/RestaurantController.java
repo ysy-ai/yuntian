@@ -238,43 +238,58 @@ public class RestaurantController {
     /**
      * 全部订单
      */
-    @RequestMapping("allOrder")
+    @RequestMapping("/allOrder")
     public String allOrder(HttpServletRequest request,AllOrder allOrder,Order order1){
-        restaurantService.deleteOrderStatus();
-        List<AllOrder> list = new ArrayList<>();
-        order1.setTel((String) request.getSession().getAttribute("tel"));
-        List<Order> orders = restaurantService.selectAllOrder(order1);
-        System.out.println(orders);
-        for (Order order:orders) {
-            //菜名
-            String rname = order.getName().substring(0, order.getName().indexOf(":")).trim();
-            String dishName = order.getName().substring(order.getName().indexOf(":") + 1).trim();
-            //数量
-            order.setTel((String) request.getSession().getAttribute("tel"));
-            int count = restaurantService.selectCountOrder(order);
-            //日期
-            String time = order.getTime();
-            //总价
-            int price = restaurantService.selectDishPrice(dishName);
-            int total = price*count;
-            System.out.println(total+"total");
-            //付款状态
-            int status = order.getStatus();
-            if(status==1){
-                allOrder.setStatus("待付款");
+        try {
+            String status1 = new String(request.getParameter("status1").getBytes("ISO_8859_1"), StandardCharsets.UTF_8);
+            restaurantService.deleteOrderStatus();
+            order1.setTel((String) request.getSession().getAttribute("tel"));
+            String str = "1";
+            if (status1.equals(str)) {
+                order1.setStatus(1);
             }
-            if(status==2){
-                allOrder.setStatus("已付款");
+            List<Order> orders = restaurantService.selectAllOrder(order1);
+            List<AllOrder> list = new ArrayList<>();
+            for (Order order:orders) {
+                //菜名
+                String rname = order.getName().substring(0, order.getName().indexOf(":")).trim();
+                String dishName = order.getName().substring(order.getName().indexOf(":") + 1).trim();
+                //数量
+                order.setTel((String) request.getSession().getAttribute("tel"));
+                int count = restaurantService.selectCountOrder(order);
+                //日期
+                String time = order.getTime();
+                //总价
+                int price = restaurantService.selectDishPrice(dishName);
+                int total = price*count;
+                //付款状态
+                int status = order.getStatus();
+                if(status==1){
+                    allOrder.setStatus("待付款");
+                }
+                if(status==2){
+                    allOrder.setStatus("已付款");
+                }
+                allOrder.setPictureUrl(order.getPictureUrl());
+                allOrder.setDishname(dishName);
+                allOrder.setRname(rname);
+                allOrder.setCount(count);
+                allOrder.setTime(time);
+                allOrder.setTotal(total);
+                list.add(allOrder);
             }
-            allOrder.setPictureUrl(order.getPictureUrl());
-            allOrder.setDishname(dishName);
-            allOrder.setRname(rname);
-            allOrder.setCount(count);
-            allOrder.setTime(time);
-            allOrder.setTotal(total);
-            list.add(allOrder);
+            request.getSession().setAttribute("list",list);
+            return "yuantian";
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
-        request.getSession().setAttribute("list",list);
+        return "yuantian";
+    }
+    /**
+     * 待付款
+     */
+    @RequestMapping("/obligation")
+    public String obligation(){
         return "yuantian";
     }
 }

@@ -51,8 +51,8 @@
     <a style="margin-left: 460px;text-decoration: none" href="getPersonMessage">个人信息设置></a>
 </div>
 <div style="height: 50px;width: 800px;float: left;margin-left: 15px;margin-top: 50px">
-    <a id="order" href="allOrder" style="margin-top: 70px;margin-left: 70px">全部订单</a>
-    <a id="pay" style="margin-top: 70px;margin-left: 70px">待付款</a>
+    <a id="order" href="allOrder?status1=3" style="margin-top: 70px;margin-left: 70px">全部订单</a>
+    <a id="pay" href="allOrder?status1=1" style="margin-top: 70px;margin-left: 70px">待付款</a>
     <a id="used" style="margin-top: 70px;margin-left: 70px">待使用</a>
     <a id="comment" style="margin-top: 70px;margin-left: 70px">待评论</a>
     <a id="shouhou" style="margin-top: 70px;margin-left: 70px">退款售后</a>
@@ -68,7 +68,6 @@
         总价：￥${allOrder.total}
         ${allOrder.status}
     </c:forEach>
-
     </div>
 
 </div>

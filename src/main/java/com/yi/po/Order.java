@@ -1,5 +1,7 @@
 package com.yi.po;
 
+import java.util.List;
+
 /**
  * @author yisy
  */

@@ -172,6 +172,11 @@
     <!--查询全部订单-->
     <select id="selectAllOrder" parameterType="Order" resultType="Order">
         select DISTINCT o.* FROM (select tel,name,time,`status`,pictureUrl from `order` where tel = #{tel}) o
+        <where>
+            <if test="status != 0">
+                status = #{status}
+            </if>
+        </where>
     </select>
     <!--添加评论-->
     <insert id="insertComment" parameterType="Comment">
