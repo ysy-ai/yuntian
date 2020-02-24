@@ -1,14 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
   User: 86132
-  Date: 2019/12/9
-  Time: 14:21
+  Date: 2019/12/31
+  Time: 16:59
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page isELIgnored="false" %>
 <html>
 <head>
-    <title>云天-注册</title>
+    <title>新增菜品</title>
     <style>
         * {
             margin: 0;
@@ -90,24 +91,22 @@
     <script type="text/javascript" src="../js/jquery-2.1.4.js"></script>
     <script type="text/javascript" src="../js/register.js" ></script>
 
-
 </head>
 <body>
 <div class="pop">
     <div class="pop-wp">
-        <a href="#" class="pop-close">×</a>
-        <div class="pop-title">用户注册</div>
-        <form action="/register" method="post">
+        <a href="businessCenter.jsp" class="pop-close">商家中心</a>
+        <div class="pop-title">新增菜品</div>
+        <form action="/upperShelf" method="post" enctype="multipart/form-data">
             <div class="account-form">
-                <input id="tel" name="tel" type="text" placeholder="昵称" class="account-input">
-                <div id="password" name="password" class="account-line"></div>
-                <input type="password" placeholder="密码" class="account-input">
+                <input type="file" name="file" placeholder="选择菜品图片" class="account-input">
                 <div class="account-line"></div>
-                <input id="password1" name="" type="password" placeholder="确认密码" class="account-input">
+                <input type="text" name="dishName" placeholder="菜品名称" class="account-input">
+                <div class="account-line"></div>
+                <input type="text" name="price" placeholder="菜品价格" class="account-input">
                 <div class="account-line"></div>
                 <div style="width: 100%;height: 10px"></div>
-                <input type="radio" name="status" value="0"/>普通用户
-                <input type="radio" name="status" value="1"/>商家
+                ${success}
                 <div style="width: 100%;height: 10px"></div>
             </div>
             <button type="submit" class="account-btn">注册</button>

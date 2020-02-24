@@ -75,7 +75,7 @@
         　　　　　<a href="register.jsp" style="text-decoration: none">　<strong id="d1"></strong></a>
 
     </form>
-    <p class="message">　　　　　　还没有账户? <a style="text-decoration: none;color: black;" href="register.jsp" style="color: white">立刻创建</a></p>
+    <p class="message">　　　　　　还没有账户? <a style="text-decoration: none;color: black;" href="jsp/register.jsp" style="color: white">立刻创建</a></p>
 </div>
 
 <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>

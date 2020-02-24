@@ -29,7 +29,7 @@ public class UsersController {
      * 判断是否登录
      */
     @RequestMapping("/judgementlogin")
-    public String judgementlogin(Users users,HttpServletRequest request) {
+    public String judgementlogin(Users users, HttpServletRequest request) {
         String username = new String(request.getParameter("username").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
         String str = "立即登录";
         if (str.equals(username)) {
@@ -62,19 +62,25 @@ public class UsersController {
     @RequestMapping(value = "/validatePassword", method = RequestMethod.POST)
     public String validatePassword(Users users, HttpServletRequest request) {
         boolean flag = usersService.selectPassword(users);
+        Users users1 = usersService.selectUsers(users);
         if (flag) {
             //创建初始昵称
-            Users users1 = usersService.selectUsers(users);
             users.setId(users1.getId());
             users.setHeadPortrait(users1.getHeadPortrait());
             users.setBirthday(users1.getBirthday());
             users.setStatus(users1.getStatus());
-            String username = users.getTel();
-            users.setUsername(username);
+            if (users1.getUsername()==null) {
+                users.setUsername(users.getTel());
+            }else{
+                users.setUsername(users1.getUsername());
+            }
             usersService.updateUsers(users);
-            request.getSession().setAttribute("tel", username);
+            request.getSession().setAttribute("tel", users.getTel());
             request.getSession().setAttribute("username", users.getUsername());
-            return "main1";
+            if("0".equals(users1.getStatus())){
+                return "main1";
+            }
+            return "businessCenter";
         }
         request.setAttribute("error", "密码错误，请重新输入");
         return "login";
@@ -99,28 +105,21 @@ public class UsersController {
     @RequestMapping("/getPersonMessage")
     public String getPersonMessage(Users users, HttpServletRequest request) {
         users.setTel((String) request.getSession().getAttribute("tel"));
-        //TODO
-        Users users1 = usersService.selectUsers(users);
-        request.getSession().setAttribute("users", users1);
+        Users userss = usersService.selectUsers(users);
+        request.getSession().setAttribute("userss", userss);
         return "personMessage";
     }
-    /**
-     * 跳转我的云天界面
-     *//*
-    @RequestMapping("/yuantian")
-    public String yuantian(){
-        return "yuantian";
-    }*/
-
     /**
      * 上传头像
      */
     @RequestMapping("/upload")
-    public String upload(MultipartFile file, Users users, HttpServletRequest request) {
+    public String upload(MultipartFile file, HttpServletRequest request) {
+        Users users2 = new Users();
+        users2.setTel((String) request.getSession().getAttribute("tel"));
         // 获得原始文件名
         String fileName = file.getOriginalFilename();
         // 新文件名
-        String newFileName = request.getSession().getAttribute("username") + ".jpg";
+        String newFileName = "head" + ".jpg";
         // 获得项目的路径
         ServletContext sc = request.getSession().getServletContext();
         // 上传位置
@@ -141,12 +140,13 @@ public class UsersController {
             }
         }
         //路径存入数据库
+        Users users = usersService.selectUsers(users2);
         users.setHeadPortrait("images/"+newFileName);
         users.setTel((String) request.getSession().getAttribute("tel"));
         usersService.updateUsers(users);
         request.getSession().setAttribute("users",users);
         return "yuantian";
-    }
+}
 
     /**
      * 修改个人信息
@@ -156,28 +156,28 @@ public class UsersController {
         Users users2 = new Users();
         users2.setTel((String) request.getSession().getAttribute("tel"));
         if (users.getUsername()!=null) {
-            Users users1 = usersService.selectUsers(users2);
-            users1.setUsername(users.getUsername());
-            usersService.updateUsers(users1);
-            request.getSession().setAttribute("users",users1);
+            Users userss = usersService.selectUsers(users2);
+            userss.setUsername(users.getUsername());
+            usersService.updateUsers(userss);
+            request.getSession().setAttribute("userss",userss);
         }
         if (users.getBirthday()!=null) {
-            Users users1 = usersService.selectUsers(users2);
-            users1.setBirthday(users.getBirthday());
-            usersService.updateUsers(users1);
-            request.getSession().setAttribute("users",users1);
+            Users userss = usersService.selectUsers(users2);
+            userss.setBirthday(users.getBirthday());
+            usersService.updateUsers(userss);
+            request.getSession().setAttribute("userss",userss);
         }
         if (users.getTel()!=null) {
-            Users users1 = usersService.selectUsers(users2);
-            users1.setTel(users.getTel());
-            usersService.updateUsers(users1);
-            request.getSession().setAttribute("users",users1);
+            Users userss = usersService.selectUsers(users2);
+            userss.setTel(users.getTel());
+            usersService.updateUsers(userss);
+            request.getSession().setAttribute("userss",userss);
         }
         if (users.getPassword()!=null) {
-            Users users1 = usersService.selectUsers(users2);
-            users1.setPassword(users.getPassword());
-            usersService.updateUsers(users1);
-            request.getSession().setAttribute("users",users1);
+            Users userss = usersService.selectUsers(users2);
+            userss.setPassword(users.getPassword());
+            usersService.updateUsers(userss);
+            request.getSession().setAttribute("users",userss);
         }
         return "personMessage";
     }

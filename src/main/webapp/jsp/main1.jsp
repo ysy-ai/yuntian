@@ -41,7 +41,7 @@
     </div>
             <c:forEach items="${fenye.list }" var="restaurant">
                 <div style="width: 700px;height:250px;border-bottom: 1px solid silver;float: left;margin-top: 20px">
-                        <a href="showDish?rname=${restaurant.rname }"><img style="width:250px;height: 250px;float: left;" src="${restaurant.url}"/></a>
+                        <a href="showDish?rname=${restaurant.rname }&yi='y'"><img style="width:250px;height: 250px;float: left;" src="${restaurant.url}"/></a>
                         <div style="width:250px;height: 250px;float: left;">
                             <ul style="list-style: none;">
                                 <li><h3>${restaurant.rname }</h3></li>

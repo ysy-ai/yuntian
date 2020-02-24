@@ -8,7 +8,6 @@
             <if test="tel != null">
                 AND tel = #{tel}
             </if>
-
             <if test="password != null">
                 AND password = #{password}
             </if>

@@ -1,10 +1,7 @@
 package com.yi.service.impl;
 
 import com.yi.dao.RestaurantDao;
-import com.yi.po.Comment;
-import com.yi.po.Dish;
-import com.yi.po.Order;
-import com.yi.po.Restaurant;
+import com.yi.po.*;
 import com.yi.service.RestaurantService;
 import org.springframework.stereotype.Service;
 
@@ -25,20 +22,18 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     /**
      * 餐馆注册
-     * @param restaurant 餐馆实体类
-     */
-    @Override
-    public void insertRestauart(Restaurant restaurant) {
-        restaurantDao.insertRestauart(restaurant);
-    }
-    /**
-     * 餐馆注册
      * @param rname 餐馆名称
      */
     @Override
     public List<Dish> selectDish(String rname) {
         return restaurantDao.selectDish(rname);
     }
+
+    @Override
+    public List<Dish> selectDishe(String rname) {
+        return restaurantDao.selectDishe(rname);
+    }
+
     /**
      * 菜品单价
      * @param dishname 菜品名称
@@ -117,7 +112,6 @@ public class RestaurantServiceImpl implements RestaurantService {
     public List<Order> selectAllOrder(Order order) {
         return restaurantDao.selectAllOrder(order);
     }
-
     /**
      * 添加评论
      * @param comment 评论实体类
@@ -143,4 +137,102 @@ public class RestaurantServiceImpl implements RestaurantService {
     public int selectCountComment(String restaurantname) {
         return restaurantDao.selectCountComment(restaurantname);
     }
+
+    /**
+     * 商家中心
+     */
+    /**
+     * 商家注册
+     * @param restaurant 餐馆实体类
+     */
+    @Override
+    public void insertRestauart(Restaurant restaurant) {
+        restaurantDao.insertRestauart(restaurant);
+    }
+    /**
+     * 根据所在城市查询城市id
+     * @return int
+     * @param cityname 城市名称
+     */
+    @Override
+    public int selectIdbycityname(String cityname) {
+        return restaurantDao.selectIdbycityname(cityname);
+    }
+    /**
+     * 查询新注册餐馆id
+     * @return int
+     */
+    @Override
+    public int selectLastRestaurant() {
+        return restaurantDao.selectLastRestaurant();
+    }
+    /**
+     * 城市餐馆表新增
+     * @param cityrestaurant 城市餐馆实体类
+     */
+    @Override
+    public void insertCityrestaurant(Cityrestaurant cityrestaurant) {
+        restaurantDao.insertCityrestaurant(cityrestaurant);
+    }
+    /**
+     * 商家详情
+     * @param tel
+     * @return Restauart 餐馆实体类
+     */
+    @Override
+    public List<Restaurant> selectRestaurantbytel(String tel) {
+        return restaurantDao.selectRestaurantbytel(tel);
+    }
+    /**
+     * 上架、下架
+     * @param dish
+     */
+    @Override
+    public void updateDishStatus(Dish dish) {
+        restaurantDao.updateDishStatus(dish);
+    }
+    /**
+     * 删除评论
+     * @param id
+     */
+    @Override
+    public void deleteCommentbyId(int id) {
+        restaurantDao.deleteCommentbyId(id);
+    }
+
+    /**
+     * 新菜上架
+     * @param dish 菜品实体类
+     */
+    @Override
+    public void insertDish(Dish dish) {
+        restaurantDao.insertDish(dish);
+    }
+    /**
+     * 查询菜品所在餐馆id
+     * @param rname
+     * @return int
+     */
+    @Override
+    public int selectIdbyrname(String rname) {
+        return restaurantDao.selectIdbyrname(rname);
+    }
+    /**
+     * 查询新增菜品id
+     * @return int
+     */
+    @Override
+    public int selectLastDish() {
+        return restaurantDao.selectLastDish();
+    }
+    /**
+     * 菜品餐馆表新增
+     * @param dishrestaurant 菜品餐馆实体类
+     */
+    @Override
+    public void insertDishRestaurant(Dishrestaurant dishrestaurant) {
+        restaurantDao.insertDishRestaurant(dishrestaurant);
+    }
+
+
 }

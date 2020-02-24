@@ -1,9 +1,6 @@
 package com.yi.service;
 
-import com.yi.po.Comment;
-import com.yi.po.Dish;
-import com.yi.po.Order;
-import com.yi.po.Restaurant;
+import com.yi.po.*;
 
 import java.util.List;
 
@@ -12,16 +9,12 @@ import java.util.List;
  */
 public interface RestaurantService {
     /**
-     * 餐馆注册
-     * @param restaurant 餐馆实体类
-     */
-    void insertRestauart(Restaurant restaurant);
-    /**
      * 菜品展示
      * @param rname 餐馆名称
      * @return Dish 菜品实体类
      */
     List<Dish> selectDish(String rname);
+    List<Dish> selectDishe(String rname);
     /**
      * 菜品单价
      * @param dishname 菜品名称
@@ -78,6 +71,7 @@ public interface RestaurantService {
     void insertComment(Comment comment);
     /**
      * 展示评论
+     * @param restaurantname
      * @return Comment 评论实体类
      */
     List<Comment> selectComment(String restaurantname);
@@ -87,4 +81,66 @@ public interface RestaurantService {
      * @return int
      */
     int selectCountComment(String restaurantname);
+
+    /**
+     * 商家中心
+     */
+    /**
+     * 商家注册
+     * @param restaurant 餐馆实体类
+     */
+    void insertRestauart(Restaurant restaurant);
+    /**
+     * 根据所在城市查询城市id
+     * @return int
+     * @param cityname 城市名称
+     */
+    int selectIdbycityname(String cityname);
+    /**
+     * 查询新注册餐馆id
+     * @return int
+     */
+    int selectLastRestaurant();
+    /**
+     * 城市餐馆表新增
+     * @param cityrestaurant 城市餐馆实体类
+     */
+    void insertCityrestaurant(Cityrestaurant cityrestaurant);
+    /**
+     * 商家详情
+     * @param tel
+     * @return Restauart 餐馆实体类
+     */
+    List<Restaurant> selectRestaurantbytel(String tel);
+    /**
+     * 上架、下架
+     * @param dish
+     */
+    void updateDishStatus(Dish dish);
+    /**
+     * 删除评论
+     * @param id
+     */
+    void deleteCommentbyId(int id);
+    /**
+     * 新菜上架
+     * @param dish 菜品实体类
+     */
+    void insertDish(Dish dish);
+    /**
+     * 查询菜品所在餐馆id
+     * @param rname
+     * @return int
+     */
+    int selectIdbyrname(String rname);
+    /**
+     * 查询新增菜品id
+     * @return int
+     */
+    int selectLastDish();
+    /**
+     * 菜品餐馆表新增
+     * @param dishrestaurant
+     */
+    void insertDishRestaurant(Dishrestaurant dishrestaurant);
 }

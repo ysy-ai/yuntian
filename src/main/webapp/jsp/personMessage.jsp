@@ -56,28 +56,28 @@
         </form>
     </form>
     </div>
-    ${users}
+    ${userss}
     <form action="updatePersonMessage" method="post">
         <div style="width: 750px;height: 100px;line-height: 100px;margin-left: 25px;border-bottom: 1px silver solid">
-            昵称　　<input type="text" name="username" value="${users.username}"
+            昵称　　<input type="text" name="username" value="${userss.username}"
                        style="height: 50px;width: 500px;margin-left: 20px;border-left: 1px silver solid"/><input
                 type="submit" value="修改"
                 style="border-radius: 20% 25% 25% 25%;width: 100px;height: 50px;margin-left: 50px;color: white"/>
         </div>
         <div style="width: 750px;height: 100px;line-height: 100px;margin-left: 25px;border-bottom: 1px silver solid">
-            生日　　<input type="text" name="birthday" value="${users.birthday}"
+            生日　　<input type="text" name="birthday" value="${userss.birthday}"
                        style="height: 50px;width: 500px;margin-left: 20px;border-left: 1px silver solid"/><input
                 type="submit" value="修改"
                 style="border-radius: 20% 25% 25% 25%;width: 100px;height: 50px;margin-left: 50px;color: white"/>
         </div>
         <div style="width: 750px;height: 100px;line-height: 100px;margin-left: 25px;border-bottom: 1px silver solid">
-            换绑手机<input type="text" name="tel" value="${users.tel}"
+            换绑手机<input type="text" name="tel" value="${userss.tel}"
                        style="height: 50px;width: 500px;margin-left: 20px;border-left: 1px silver solid"/><input
                 type="submit" value="修改"
                 style="border-radius: 20% 25% 25% 25%;width: 100px;height: 50px;margin-left: 50px;color: white"/>
         </div>
         <div style="width: 750px;height: 100px;line-height: 100px;margin-left: 25px;">
-            登录密码<input type="text" name="password" value="${users.password}"
+            登录密码<input type="text" name="password" value="${userss.password}"
                        style="height: 50px;width: 500px;margin-left: 20px;border-left: 1px silver solid"/><input
                 type="submit" value="修改"
                 style="border-radius: 20% 25% 25% 25%;width: 100px;height: 50px;margin-left: 50px;color: white"/>

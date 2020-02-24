@@ -10,16 +10,112 @@
 <html>
 <head>
     <title>餐馆注册</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #ff6700;
+            font-size: 14px;
+        }
+        .pop {
+            position: fixed;
+            margin: 10% 35%;
+        }
+        .pop-wp {
+            width: 280px;
+            background: #FFF;
+            padding: 30px 50px 50px;
+        }
+        .pop-close {
+            top: -12px;
+            width: 30px;
+            right: -12px;
+            height: 30px;
+            color: #ccc;
+            font-size: 20px;
+            position: absolute;
+            text-align: center;
+            border-radius: 50%;
+            background: #444;
+            display: inline-block;
+        }
+        .pop-close:hover {
+            background: #111;
+        }
+        .pop-title {
+            font-size: 24px;
+            line-height: 24px;
+            margin-bottom: 20px;
+        }
+
+        .account-form {
+            padding: 0 15px;
+            margin-bottom: 40px;
+            border: 1px solid #dcdcdc;
+        }
+
+        .account-input {
+            width: 100%;
+            border: none;
+            height: 30px;
+            outline: none;
+            display: block;
+            margin: 10px 0;
+        }
+        .account-line {
+            width: 100%;
+            height: 1px;
+            overflow: hidden;
+            background: #dcdcdc;
+        }
+        .account-btn {
+            width: 100%;
+            border: none;
+            height: 45px;
+            outline: none;
+            color: #FFF;
+            cursor: pointer;
+            font-size: 14px;
+            text-align: center;
+            background: #eb4235;
+        }
+        .account-btn:hover {
+            background: #d1271a;
+        }
+        .pop-close {
+            text-decoration: none;
+        }
+    </style>
+    <script type="text/javascript" src="../js/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="../js/register.js" ></script>
+
 </head>
 <body>
-<form action="/registerRestaurant" method="post" enctype="multipart/form-data">
-    餐馆图片:<input type="file" name="file" style="height: 50px;width: 120px"/><br>
-    餐馆名称:<input type="text" name="rname"/><br>
-    餐馆地址:<input type="text" name="address"/><br>
-    餐馆电话:<input type="text" name="tel"/><br>
-    人均价格:<input type="text" name="perprice"/><br>
-    <input type="submit" value="注册">
-</form>
-${success}
+<div class="pop">
+    <div class="pop-wp">
+        <a href="#" class="pop-close">×</a>
+        <div class="pop-title">餐馆注册</div>
+        <form action="/registerRestaurant" method="post" enctype="multipart/form-data">
+            <div class="account-form">
+                <input type="file" name="file" placeholder="选择餐馆图片" class="account-input">
+                <div class="account-line"></div>
+                <input type="text" name="rname" placeholder="餐馆名称" class="account-input">
+                <div class="account-line"></div>
+                <input type="text" name="address" placeholder="餐馆地址" class="account-input">
+                <div class="account-line"></div>
+                <input type="text" name="tel" value="${tel}" class="account-input">
+                <div class="account-line"></div>
+                <input type="text" name="perprice" placeholder="人均价格" class="account-input">
+                <div class="account-line"></div>
+                <div style="width: 100%;height: 10px"></div>
+                ${success}
+                <div style="width: 100%;height: 10px"></div>
+            </div>
+            <button type="submit" class="account-btn">注册</button>
+        </form>
+    </div>
+</div>
 </body>
 </html>

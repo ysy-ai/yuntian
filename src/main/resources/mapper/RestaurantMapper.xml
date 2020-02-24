@@ -1,7 +1,210 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yi.dao.RestaurantDao">
-    <!--餐馆注册-->
+    <!--菜品展示-->
+    <select id="selectDish" parameterType="String" resultType="Dish">
+        select d.*
+        from dish d,
+             restaurant r,
+             dishrestaurant dr
+        where dr.dishid = d.id
+          and dr.restaurantid = r.id
+          and r.rname = #{rname}
+    </select>
+    <select id="selectDishe" parameterType="String" resultType="Dish">
+        select d.*
+        from dish d,
+             restaurant r,
+             dishrestaurant dr
+        where dr.dishid = d.id
+          and dr.restaurantid = r.id
+          and r.rname = #{rname}
+          and d.status = 0
+    </select>
+    <!--菜品单价-->
+    <select id="selectDishPrice" parameterType="String" resultType="int">
+        select price
+        from dish
+        where dishname = #{dishname};
+    </select>
+
+    <!--订单管理-->
+    <insert id="insertOrder" parameterType="Order">
+        insert into `order`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="tel != null">
+                tel,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="time != null">
+                time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="pictureUrl != null">
+                pictureUrl,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="tel != null">
+                #{tel},
+            </if>
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="time != null">
+                #{time},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="pictureUrl != null">
+                #{pictureUrl},
+            </if>
+        </trim>
+    </insert>
+    <!--订单详情-->
+    <select id="selectOrder" parameterType="Order" resultType="Order">
+        SELECT DISTINCT name from `order`
+        <where>
+            <if test="tel != null">
+                AND tel = #{tel}
+            </if>
+            <if test="name != null">
+                AND name = #{name}
+            </if>
+            <if test="status != null">
+                AND status = 0
+            </if>
+        </where>
+    </select>
+    <!--订单数量-->
+    <select id="selectCountOrder" parameterType="Order" resultType="int">
+        SELECT COUNT(id) from `order`
+        <where>
+            <if test="tel != null">
+                AND tel = #{tel}
+            </if>
+            <if test="name != null">
+                AND name = #{name}
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+            <if test="time != null">
+                AND time = #{time}
+            </if>
+        </where>
+    </select>
+    <!--删除订单-->
+    <select id="selectOrderid" parameterType="Order" resultType="int">
+        SELECT DISTINCT id from `order`
+        <where>
+            <if test="tel != null">
+                AND tel = #{tel}
+            </if>
+            <if test="name != null">
+                AND name = #{name}
+            </if>
+        </where>
+        LIMIT 0,1
+    </select>
+    <delete id="deleteOrder" parameterType="int">
+        DELETE
+        from `order`
+        where id = #{id}
+    </delete>
+    <delete id="deleteOrderStatus">
+        DELETE
+        from `order`
+        where status = 0
+    </delete>
+    <!--更新订单-->
+    <update id="updateStatus" parameterType="Order">
+        update `order`
+        <set>
+            <if test="time">time=#{time},</if>
+            <if test="status">status=#{status},</if>
+        </set>
+        where name = #{name} and tel = #{tel} and time is null
+    </update>
+    <!--查询全部订单-->
+    <select id="selectAllOrder" parameterType="Order" resultType="Order">
+        select DISTINCT o.*
+        FROM (select tel, name, time, `status`, pictureUrl from `order`
+        <where>
+            <if test="tel != null">
+                AND tel = #{tel}
+            </if>
+            <if test="status != 0">
+                AND status = #{status}
+            </if>
+        </where>
+            ) o
+    </select>
+
+    <!--添加评论-->
+    <insert id="insertComment" parameterType="Comment">
+        insert into `comment`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="text != null">
+                text,
+            </if>
+            <if test="photourl != null">
+                photourl,
+            </if>
+            <if test="headurl != null">
+                headurl,
+            </if>
+            <if test="restaurantname != null">
+                restaurantname,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="text != null">
+                #{text},
+            </if>
+            <if test="photourl != null">
+                #{photourl},
+            </if>
+            <if test="headurl != null">
+                #{headurl},
+            </if>
+            <if test="restaurantname != null">
+                #{restaurantname},
+            </if>
+        </trim>
+    </insert>
+    <!--展示评论-->
+    <select id="selectComment" parameterType="String" resultType="Comment">
+        select *
+        from comment
+        where restaurantname = #{restaurantname}
+    </select>
+    <!--统计评论数量-->
+    <select id="selectCountComment" parameterType="String" resultType="int">
+        select count(id)
+        from comment
+        where restaurantname = #{restaurantname}
+    </select>
+
+    <!--商品中心-->
+    <!--商家注册-->
     <insert id="insertRestauart" parameterType="Restaurant">
         insert into restaurant
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -57,171 +260,39 @@
             </if>
         </trim>
     </insert>
-
-    <!--菜品展示-->
-    <select id="selectDish" parameterType="String" resultType="Dish">
-        select d.* from dish d,restaurant r,dishrestaurant dr where dr.dishid=d.id and dr.restaurantid=r.id and r.rname=#{rname}
+    <select id="selectIdbycityname" parameterType="String" resultType="int">
+        select id from city where cityname = #{cityname}
     </select>
-    <!--菜品单价-->
-    <select id="selectDishPrice" parameterType="String" resultType="int">
-        select price from dish where dishname = #{dishname};
+    <select id="selectLastRestaurant" resultType="int">
+        select id from restaurant order by id DESC limit 1;
     </select>
-
-    <!--订单管理-->
-    <insert id="insertOrder" parameterType="Order">
-        insert into `order`
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="tel != null">
-                tel,
-            </if>
-            <if test="name != null">
-                name,
-            </if>
-            <if test="time != null">
-                time,
-            </if>
-            <if test="status != null">
-                status,
-            </if>
-            <if test="pictureUrl != null">
-                pictureUrl,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id},
-            </if>
-            <if test="tel != null">
-                #{tel},
-            </if>
-            <if test="name != null">
-                #{name},
-            </if>
-            <if test="time != null">
-                #{time},
-            </if>
-            <if test="status != null">
-                #{status},
-            </if>
-            <if test="pictureUrl != null">
-                #{pictureUrl},
-            </if>
-        </trim>
+    <insert id="insertCityrestaurant" parameterType="Cityrestaurant">
+        insert into cityrestaurant(cityid,restaurantid) values (#{cityid},#{restaurantid})
     </insert>
-    <!--订单详情-->
-    <select id="selectOrder" parameterType="Order" resultType="Order">
-        SELECT DISTINCT name from `order`
-       <where>
-            <if test="tel != null">
-                AND tel = #{tel}
-            </if>
-            <if test="name != null">
-                AND name = #{name}
-            </if>
-           <if test="status != null">
-               AND status = 0
-           </if>
-        </where>
+    <!--商家详情-->
+    <select id="selectRestaurantbytel" parameterType="String" resultType="Restaurant">
+        select * from restaurant where tel = #{tel}
     </select>
-    <!--订单数量-->
-    <select id="selectCountOrder" parameterType="Order" resultType="int">
-        SELECT COUNT(id) from `order`
-        <where>
-            <if test="tel != null">
-                AND tel = #{tel}
-            </if>
-            <if test="name != null">
-                AND name = #{name}
-            </if>
-            <if test="status != null">
-                AND status = #{status}
-            </if>
-        </where>
-    </select>
-    <!--删除订单-->
-    <select id="selectOrderid" parameterType="Order" resultType="int">
-        SELECT DISTINCT id from `order`
-        <where>
-            <if test="tel != null">
-                AND tel = #{tel}
-            </if>
-            <if test="name != null">
-                AND name = #{name}
-            </if>
-        </where>
-        LIMIT 0,1
-    </select>
-    <delete id="deleteOrder" parameterType="int">
-        DELETE from `order` where id=#{id}
-    </delete>
-    <delete id="deleteOrderStatus">
-        DELETE from `order` where status = 0
-    </delete>
-    <!--更新订单-->
-    <update id="updateStatus" parameterType="Order">
-        update `order`
-        <set>
-            <if test="time">time=#{time},</if>
-            <if test="status">status=#{status},</if>
-        </set>
-        where name = #{name} and tel = #{tel}
+    <!--上架、下架-->
+    <update id="updateDishStatus" parameterType="Dish">
+        update dish set status = #{status} , statusDetails = #{statusDetails} where id = #{id}
     </update>
-    <!--查询全部订单-->
-    <select id="selectAllOrder" parameterType="Order" resultType="Order">
-        select DISTINCT o.* FROM (select tel,name,time,`status`,pictureUrl from `order` where tel = #{tel}) o
-        <where>
-            <if test="status != 0">
-                status = #{status}
-            </if>
-        </where>
-    </select>
-    <!--添加评论-->
-    <insert id="insertComment" parameterType="Comment">
-        insert into `comment`
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="text != null">
-                text,
-            </if>
-            <if test="photourl != null">
-                photourl,
-            </if>
-            <if test="headurl != null">
-                headurl,
-            </if>
-            <if test="restaurantname != null">
-                restaurantname,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id},
-            </if>
-            <if test="text != null">
-                #{text},
-            </if>
-            <if test="photourl != null">
-                #{photourl},
-            </if>
-            <if test="headurl != null">
-                #{headurl},
-            </if>
-            <if test="restaurantname != null">
-                #{restaurantname},
-            </if>
-        </trim>
+    <!--删除评论-->
+    <delete id="deleteCommentbyId" parameterType="int">
+        delete from comment where id = #{id}
+    </delete>
+    <!--新菜上架-->
+    <insert id="insertDish" parameterType="Dish">
+        insert into dish(dishname,price,pictureurl,status,statusdetails) values(#{dishName},#{price},#{pictureUrl},#{status},#{statusDetails})
     </insert>
-    <!--展示评论-->
-    <select id="selectComment" parameterType="String" resultType="Comment">
-        select * from comment where restaurantname=#{restaurantname}
+    <select id="selectIdbyrname" parameterType="String" resultType="int">
+        select id from restaurant where rname = #{rname}
     </select>
-    <!--统计评论数量-->
-    <select id="selectCountComment" parameterType="String" resultType="int">
-        select count(id) from comment where restaurantname=#{restaurantname}
+    <select id="selectLastDish" resultType="int">
+        select id from dish order by id DESC limit 1;
     </select>
+    <insert id="insertDishRestaurant" parameterType="Dishrestaurant">
+        insert into dishrestaurant(dishid,restaurantid) values (#{dishid},#{restaurantid})
+    </insert>
 </mapper>
+

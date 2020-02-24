@@ -1,6 +1,7 @@
 package com.yi.controller;
 
 import com.yi.po.*;
+import com.yi.service.CityService;
 import com.yi.service.RestaurantService;
 import com.yi.service.UsersService;
 import org.springframework.stereotype.Controller;
@@ -23,58 +24,33 @@ import java.util.List;
 public class RestaurantController {
     private final RestaurantService restaurantService;
     private final UsersService usersService;
+    private final CityService cityService;
 
-    public RestaurantController(RestaurantService restaurantService, UsersService usersService) {
+    public RestaurantController(RestaurantService restaurantService, UsersService usersService,CityService cityService) {
         this.restaurantService = restaurantService;
         this.usersService = usersService;
+        this.cityService = cityService;
     }
-
-    /**
-     * 餐馆注册
-     */
-    @RequestMapping("/registerRestaurant")
-    public String registerRestaurant(MultipartFile file, Restaurant restaurant, HttpServletRequest request) {
-        // 获得原始文件名
-        String fileName = file.getOriginalFilename();
-        // 上传位置
-        // 设定文件保存的目录
-        String path = "C:/Users/86132/IdeaProjects/yidemo1/src/main/webapp/images";
-        if (!file.isEmpty()) {
-            try {
-                FileOutputStream fos = new FileOutputStream(path + "/" + fileName);
-                InputStream in = file.getInputStream();
-                int b;
-                while ((b = in.read()) != -1) {
-                    fos.write(b);
-                }
-                fos.close();
-                in.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        //路径存入数据库
-        restaurant.setUrl("images/" + fileName);
-        restaurant.setRname(restaurant.getRname());
-        restaurant.setAddress(restaurant.getAddress());
-        restaurant.setTel(restaurant.getTel());
-        restaurant.setPerprice(restaurant.getPerprice());
-        restaurantService.insertRestauart(restaurant);
-        request.getSession().setAttribute("success", "注册成功");
-        return "registerRestaurant";
-    }
-
     /**
      * 菜品展示
      */
     @RequestMapping("showDish")
     public String showDish(HttpServletRequest request) {
+        String yi = request.getParameter("yi");
         try {
             String rname = new String(request.getParameter("rname").getBytes("ISO_8859_1"), StandardCharsets.UTF_8);
-            List<Dish> dishes = restaurantService.selectDish(rname);
             List<Comment> comments = restaurantService.selectComment(rname);
             request.getSession().setAttribute("comments", comments);
             request.getSession().setAttribute("rname", rname);
+            if("i".equals(yi)){
+                List<Dish> dishes = restaurantService.selectDish(rname);
+                for (Dish d:dishes) {
+                    d.setRname(rname);
+                }
+                request.getSession().setAttribute("dishes", dishes);
+                return "merchantDish";
+            }
+            List<Dish> dishes = restaurantService.selectDishe(rname);
             request.getSession().setAttribute("dishes", dishes);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -229,6 +205,7 @@ public class RestaurantController {
             comment.setRestaurantname(rname);
             restaurantService.insertComment(comment);
             List<Comment> comments = restaurantService.selectComment(rname);
+            request.getSession().setAttribute("comments", rname);
             request.getSession().setAttribute("comments", comments);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -236,10 +213,11 @@ public class RestaurantController {
         return "dish";
     }
     /**
-     * 全部订单
+     * 全部订单  待付款
+     * status等于2（付款） status等于2（待付款）
      */
     @RequestMapping("/allOrder")
-    public String allOrder(HttpServletRequest request,AllOrder allOrder,Order order1){
+    public String allOrder(HttpServletRequest request,Order order1){
         try {
             String status1 = new String(request.getParameter("status1").getBytes("ISO_8859_1"), StandardCharsets.UTF_8);
             restaurantService.deleteOrderStatus();
@@ -251,12 +229,14 @@ public class RestaurantController {
             List<Order> orders = restaurantService.selectAllOrder(order1);
             List<AllOrder> list = new ArrayList<>();
             for (Order order:orders) {
+                AllOrder allOrder = new AllOrder();
                 //菜名
                 String rname = order.getName().substring(0, order.getName().indexOf(":")).trim();
                 String dishName = order.getName().substring(order.getName().indexOf(":") + 1).trim();
                 //数量
                 order.setTel((String) request.getSession().getAttribute("tel"));
                 int count = restaurantService.selectCountOrder(order);
+                System.out.println("count: "+count);
                 //日期
                 String time = order.getTime();
                 //总价
@@ -279,17 +259,162 @@ public class RestaurantController {
                 list.add(allOrder);
             }
             request.getSession().setAttribute("list",list);
-            return "yuantian";
+            return "orderDisplay";
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        return "yuantian";
+        return "orderDisplay";
     }
     /**
-     * 待付款
+     * 猜你喜欢
      */
-    @RequestMapping("/obligation")
-    public String obligation(){
+    @RequestMapping("/selectrestauantBycity")
+    public String selectrestauantBycity(HttpServletRequest request , UtilFenye utilFenye){
+        utilFenye.setName(request.getParameter("name"));
+        utilFenye.setPageNow(Integer.parseInt(request.getParameter("pageNow")));
+        Fenye fenye = cityService.selectrestauantBycity(utilFenye);
+        for (Restaurant restaurant:fenye.getList()) {
+            restaurant.setCommentcount(restaurantService.selectCountComment(restaurant.getRname()));
+        }
+        request.getSession().setAttribute("fenye",fenye);
         return "yuantian";
     }
+
+    /**
+     * 商家中心
+     */
+    /**
+     * 商家注册
+     */
+    @RequestMapping("/registerRestaurant")
+    public String registerRestaurant(MultipartFile file, Restaurant restaurant, HttpServletRequest request) {
+        System.out.println(restaurant);
+        // 获得原始文件名
+        String fileName = file.getOriginalFilename()/*.replace(".","")+".jpg"*/;
+        System.out.println(fileName);
+        // 上传位置
+        // 设定文件保存的目录
+        String path = "C:/Users/86132/IdeaProjects/yidemo1/src/main/webapp/images";
+        if (!file.isEmpty()) {
+            try {
+                FileOutputStream fos = new FileOutputStream(path + "/" + fileName);
+                InputStream in = file.getInputStream();
+                int b;
+                while ((b = in.read()) != -1) {
+                    fos.write(b);
+                }
+                fos.close();
+                in.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        //路径存入数据库
+        System.out.println(fileName);
+        restaurant.setUrl("images/" + fileName);
+        System.out.println(restaurant);
+        restaurantService.insertRestauart(restaurant);
+        int cityid = restaurantService.selectIdbycityname((String) request.getSession().getAttribute("city"));
+        int restaurantid = restaurantService.selectLastRestaurant();
+        Cityrestaurant cityrestaurant = new Cityrestaurant();
+        cityrestaurant.setCityid(cityid);
+        cityrestaurant.setRestaurantid(restaurantid);
+        restaurantService.insertCityrestaurant(cityrestaurant);
+        request.getSession().setAttribute("success", "注册成功");
+        return "registerRestaurant";
+    }
+    /**
+     * 商家详情
+     */
+    @RequestMapping("merchantDetails")
+    public String merchantDetails(HttpServletRequest request){
+        List<Restaurant> list = restaurantService.selectRestaurantbytel((String) request.getSession().getAttribute("tel"));
+        request.getSession().setAttribute("list",list);
+        return "merchantDetails";
+    }
+    /**
+     * 上架、下架
+     */
+    @RequestMapping("/updateDishStatus")
+    public String updateDishStatus(Dish dish , HttpServletRequest request){
+        int id =Integer.parseInt(request.getParameter("id"));
+        int status =Integer.parseInt(request.getParameter("status"));
+        if(status==0){
+            dish.setStatus(1);
+            dish.setStatusDetails("上架");
+        }
+        if(status==1){
+            dish.setStatus(0);
+            dish.setStatusDetails("下架");
+        }
+        dish.setId(id);
+        restaurantService.updateDishStatus(dish);
+        try {
+            String rname = new String(request.getParameter("rname").getBytes("ISO_8859_1"), StandardCharsets.UTF_8);
+            request.getSession().setAttribute("rname",rname);
+            List<Dish> dishes = restaurantService.selectDish(rname);
+            for (Dish d:dishes) {
+                d.setRname(rname);
+            }
+            request.getSession().setAttribute("dishes", dishes);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return "merchantDish";
+    }
+    /**
+     * 删除评论
+     */
+    @RequestMapping("/deleteComment")
+    public String deleteComment(HttpServletRequest request){
+        int id = Integer.parseInt(request.getParameter("id"));
+        restaurantService.deleteCommentbyId(id);
+        String rname = (String) request.getSession().getAttribute("rname");
+        List<Comment> comments = restaurantService.selectComment(rname);
+        request.getSession().setAttribute("comments", comments);
+        return "merchantDish";
+    }
+    /**
+     * 新菜上架
+     */
+    @RequestMapping("/upperShelf")
+    public String upperShelf(MultipartFile file, HttpServletRequest request,Dish dish){
+        // 获得原始文件名
+        String fileName = file.getOriginalFilename();
+        System.out.println(fileName);
+        // 上传位置
+        // 设定文件保存的目录
+        String path = "C:/Users/86132/IdeaProjects/yidemo1/src/main/webapp/images";
+        if (!file.isEmpty()) {
+            try {
+                FileOutputStream fos = new FileOutputStream(path+"/"+fileName);
+                InputStream in = file.getInputStream();
+                int b;
+                while ((b = in.read()) != -1) {
+                    fos.write(b);
+                }
+                fos.close();
+                in.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        //路径存入数据库
+        dish.setPictureUrl("images/"+fileName);
+        dish.setStatus(0);
+        dish.setStatusDetails("下架");
+        restaurantService.insertDish(dish);
+        int rid = restaurantService.selectIdbyrname((String) request.getSession().getAttribute("rname"));
+        int did = restaurantService.selectLastDish();
+        Dishrestaurant dishrestaurant = new Dishrestaurant();
+        dishrestaurant.setDishid(did);
+        dishrestaurant.setRestaurantid(rid);
+        restaurantService.insertDishRestaurant(dishrestaurant);
+        request.getSession().setAttribute("success", "新增成功");
+        return "registerDish";
+    }
+
+
+
+
 }

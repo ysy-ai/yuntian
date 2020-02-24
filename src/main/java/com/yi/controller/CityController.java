@@ -5,7 +5,6 @@ import com.yi.service.CityService;
 import com.yi.service.RestaurantService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -24,7 +23,6 @@ public class CityController {
         this.cityService = cityService;
         this.restaurantService=restaurantService;
     }
-
     /**
      * 主页默认展示
      */
@@ -128,6 +126,7 @@ public class CityController {
      */
     @RequestMapping("/getRestauantBycity")
     public String getRestauantBycity (UtilFenye utilFenye,HttpServletRequest request) {
+        //TODO
         utilFenye.setName(request.getParameter("name"));
         utilFenye.setPageNow(Integer.parseInt(request.getParameter("pageNow")));
         Fenye fenye = cityService.selectrestauantBycity(utilFenye);
