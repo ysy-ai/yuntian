@@ -258,11 +258,37 @@ public class RestaurantController {
                 allOrder.setTotal(total);
                 list.add(allOrder);
             }
-            request.getSession().setAttribute("list",list);
+            request.setAttribute("list",list);
             return "orderDisplay";
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+        return "orderDisplay";
+    }
+    /**
+     * 删除订单
+     */
+    @RequestMapping("/deleteOrder")
+    public String deleteOrder(HttpServletRequest request , Order order){
+        restaurantService.deleteOrderbyTime(order);
+        return "orderDisplay";
+    }
+    /**
+     * 待使用、待评价、退款售后
+     */
+    @RequestMapping("/noused")
+    public String noused(HttpServletRequest request){
+        request.getSession().setAttribute("message","对不起，没有可以使用的订单!");
+        return "orderDisplay";
+    }
+    @RequestMapping("/nocomment")
+    public String nocomment(HttpServletRequest request){
+        request.getSession().setAttribute("message","对不起，没有可以评价的订单!");
+        return "orderDisplay";
+    }
+    @RequestMapping("/refund")
+    public String refund(HttpServletRequest request){
+        request.getSession().setAttribute("message","对不起，没有可以使用的订单!");
         return "orderDisplay";
     }
     /**
@@ -290,7 +316,7 @@ public class RestaurantController {
     public String registerRestaurant(MultipartFile file, Restaurant restaurant, HttpServletRequest request) {
         System.out.println(restaurant);
         // 获得原始文件名
-        String fileName = file.getOriginalFilename()/*.replace(".","")+".jpg"*/;
+        String fileName = file.getOriginalFilename();
         System.out.println(fileName);
         // 上传位置
         // 设定文件保存的目录
@@ -326,9 +352,21 @@ public class RestaurantController {
     /**
      * 商家详情
      */
-    @RequestMapping("merchantDetails")
+    @RequestMapping("/merchantDetails")
     public String merchantDetails(HttpServletRequest request){
         List<Restaurant> list = restaurantService.selectRestaurantbytel((String) request.getSession().getAttribute("tel"));
+        request.getSession().setAttribute("list",list);
+        return "merchantDetails";
+    }
+    /**
+     * 注销餐馆
+     */
+    @RequestMapping("/deleteRestaurant")
+    public String deleteRestaurant(Restaurant restaurant,HttpServletRequest request){
+        restaurantService.deletecityRestaurantbyrid(restaurant.getId());
+        restaurantService.deletedishRestaurantbyrid(restaurant.getId());
+        restaurantService.deleteRestaurant(restaurant.getId());
+        List<Restaurant> list = restaurantService.selectRestaurantbytel(restaurant.getTel());
         request.getSession().setAttribute("list",list);
         return "merchantDetails";
     }

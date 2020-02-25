@@ -57,6 +57,14 @@ public class UsersServiceImpl implements UsersService {
     public void updateUsers(Users users) {
         usersDao.updateUsers(users);
     }
+    /**
+     * 用户注销
+     * @param tel 电话
+     */
+    @Override
+    public void deleteUser(String tel) {
+        usersDao.deleteUser(tel);
+    }
 
 
 }

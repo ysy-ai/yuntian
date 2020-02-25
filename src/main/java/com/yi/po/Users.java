@@ -32,14 +32,11 @@ public class Users{
      * 用户标识  0：普通用户  1：商家
      */
     private String status;
-    /**
-     * 辅助图片上传属性
-     */
-    private MultipartFile file;
+
 
     public Users(){}
 
-    public Users(int id, String tel, String username, String password, String headPortrait, String birthday, String status, MultipartFile file) {
+    public Users(int id, String tel, String username, String password, String headPortrait, String birthday, String status) {
         this.id = id;
         this.tel = tel;
         this.username = username;
@@ -47,7 +44,6 @@ public class Users{
         this.headPortrait = headPortrait;
         this.birthday = birthday;
         this.status = status;
-        this.file = file;
     }
 
     public int getId() {
@@ -106,14 +102,6 @@ public class Users{
         this.status = status;
     }
 
-    public MultipartFile getFile() {
-        return file;
-    }
-
-    public void setFile(MultipartFile file) {
-        this.file = file;
-    }
-
     @Override
     public String toString() {
         return "Users{" +
@@ -124,7 +112,6 @@ public class Users{
                 ", headPortrait='" + headPortrait + '\'' +
                 ", birthday='" + birthday + '\'' +
                 ", status='" + status + '\'' +
-                ", file=" + file +
                 '}';
 
 }

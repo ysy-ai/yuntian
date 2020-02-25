@@ -69,6 +69,7 @@ public class CityServiceImpl implements CityService {
         utilFenye.setD1(d1);
         utilFenye.setD2(d2);
         utilFenye.setName(utilFenye.getName());
+        System.out.println(utilFenye+"3333333333");
         List<Restaurant> list=cityDao.selectrestauantBycuidisine(utilFenye);
         fenye.setList(list);
         return fenye;

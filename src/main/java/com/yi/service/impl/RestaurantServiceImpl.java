@@ -113,6 +113,15 @@ public class RestaurantServiceImpl implements RestaurantService {
         return restaurantDao.selectAllOrder(order);
     }
     /**
+     * 删除顶单
+     * @param order 订单实体类
+     */
+    @Override
+    public void deleteOrderbyTime(Order order) {
+        restaurantDao.deleteOrderbyTime(order);
+    }
+
+    /**
      * 添加评论
      * @param comment 评论实体类
      */
@@ -183,6 +192,26 @@ public class RestaurantServiceImpl implements RestaurantService {
     public List<Restaurant> selectRestaurantbytel(String tel) {
         return restaurantDao.selectRestaurantbytel(tel);
     }
+
+    @Override
+    public void deletecityRestaurantbyrid(int id) {
+        restaurantDao.deletecityRestaurantbyrid(id);
+    }
+
+    @Override
+    public void deletedishRestaurantbyrid(int id) {
+        restaurantDao.deletedishRestaurantbyrid(id);
+    }
+
+    /**
+     * 注销餐馆
+     * @param id 餐馆id
+     */
+    @Override
+    public void deleteRestaurant(int id) {
+        restaurantDao.deleteRestaurant(id);
+    }
+
     /**
      * 上架、下架
      * @param dish

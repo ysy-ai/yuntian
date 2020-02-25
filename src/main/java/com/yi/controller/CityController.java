@@ -57,7 +57,7 @@ public class CityController {
         //经常访问的城市
         String city = request.getParameter("city");
         String city1 = new String(city.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
-        request.setAttribute("city1",city1);
+        request.getSession().setAttribute("city1",city1);
         //获取城市列表
         List<List> list = cityService.selectcityByprovince();
         List henan = list.get(0);
@@ -66,12 +66,12 @@ public class CityController {
         List sichuan = list.get(3);
         List jiangsu = list.get(4);
         List guangdong = list.get(5);
-        request.setAttribute("henan",henan);
-        request.setAttribute("zhejiang",zhejiang);
-        request.setAttribute("shandong",shandong);
-        request.setAttribute("sichuan",sichuan);
-        request.setAttribute("jiangsu",jiangsu);
-        request.setAttribute("guangdong",guangdong);
+        request.getSession().setAttribute("henan",henan);
+        request.getSession().setAttribute("zhejiang",zhejiang);
+        request.getSession().setAttribute("shandong",shandong);
+        request.getSession().setAttribute("sichuan",sichuan);
+        request.getSession().setAttribute("jiangsu",jiangsu);
+        request.getSession().setAttribute("guangdong",guangdong);
         return "city";
     }
 
@@ -79,11 +79,17 @@ public class CityController {
      * 获取城市名称
      */
     @RequestMapping("/getCityname")
-    public String getCityname (String cityname1,HttpServletRequest request) {
+    public String getCityname (String cityname1,HttpServletRequest request,UtilFenye utilFenye) {
         if (cityname1!=null) {
+            System.out.println("444"+cityname1);
             String a = ",";
             String b = " ";
             String cityname2 = cityname1.replace(a, "").replace(b, "");
+            if(cityname2==null||cityname2.equals("")||cityname2.equals(" ")){
+                request.getSession().setAttribute("city",request.getSession().getAttribute("city"));
+                request.setAttribute("falseMessage","请输入城市名称！！！");
+                return "city";
+            }
             request.getSession().setAttribute("city",cityname2);
             //按当前城市名称查询所在省份的所有城市
             City city = new City();
@@ -93,14 +99,15 @@ public class CityController {
         }
         //isEmpty():判断字符串是否为null
         String str = "cityname";
-        if (!request.getParameter(str).isEmpty()&&request.getParameter(str)!=null&&!request.getParameter(str).equals("null")) {
+        if (!request.getParameter("cityname").isEmpty()&&request.getParameter(str)!=null&&!request.getParameter(str).equals("null")) {
+            System.out.println("1111");
             //按当前城市名称查询所在省份的所有城市
             String cityname = new String(request.getParameter("cityname").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+            request.getSession().setAttribute("city",cityname);
             City city = new City();
             city.setCityname(cityname);
             List<City> cities = cityService.selectcityBycity(city);
             request.getSession().setAttribute("cities",cities);
-            request.getSession().setAttribute("city",cityname);
         }
         return "main1";
     }
@@ -110,30 +117,38 @@ public class CityController {
      */
     @RequestMapping("/getRestauantBycuidisine")
     public String getRestauantBycuidisine (UtilFenye utilFenye, HttpServletRequest request) {
-        String name = new String(utilFenye.getName().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
-        utilFenye.setName(name);
-        utilFenye.setPageNow(Integer.parseInt(request.getParameter("pageNow")));
-        Fenye fenye = cityService.selectrestauantBycuidisine(utilFenye);
-        for (Restaurant restaurant:fenye.getList()) {
-            restaurant.setCommentcount(restaurantService.selectCountComment(restaurant.getRname()));
+        if(utilFenye.getName()!=null){
+            String name = new String(utilFenye.getName().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+            request.getSession().setAttribute("name",name);
+            utilFenye.setName(name);
         }
-        request.getSession().setAttribute("fenye",fenye);
-        return "main1";
-    }
-
-    /**
-     * 根据城市名称查询餐馆
-     */
-    @RequestMapping("/getRestauantBycity")
-    public String getRestauantBycity (UtilFenye utilFenye,HttpServletRequest request) {
-        //TODO
-        utilFenye.setName(request.getParameter("name"));
-        utilFenye.setPageNow(Integer.parseInt(request.getParameter("pageNow")));
-        Fenye fenye = cityService.selectrestauantBycity(utilFenye);
-        for (Restaurant restaurant:fenye.getList()) {
-            restaurant.setCommentcount(restaurantService.selectCountComment(restaurant.getRname()));
+        if(utilFenye.getName()==null){
+            String name = (String) request.getSession().getAttribute("name");
+            utilFenye.setName(name);
         }
-        request.getSession().setAttribute("fenye",fenye);
+        utilFenye.setPageNow(Integer.parseInt(request.getParameter("pageNow")));
+        if(utilFenye.getSign()!=null){
+            String sign = new  String(utilFenye.getSign().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+            request.getSession().setAttribute("sign",sign);
+        }
+        if(utilFenye.getSign()==null){
+            String sign = (String) request.getSession().getAttribute("sign");
+            utilFenye.setSign(sign);
+        }
+        if("cu".equals(utilFenye.getSign())){
+            Fenye fenye = cityService.selectrestauantBycuidisine(utilFenye);
+            for (Restaurant restaurant:fenye.getList()) {
+                restaurant.setCommentcount(restaurantService.selectCountComment(restaurant.getRname()));
+            }
+            request.getSession().setAttribute("fenye",fenye);
+        }
+        if ("ci".equals(utilFenye.getSign())){
+            Fenye fenye = cityService.selectrestauantBycity(utilFenye);
+            for (Restaurant restaurant:fenye.getList()) {
+                restaurant.setCommentcount(restaurantService.selectCountComment(restaurant.getRname()));
+            }
+            request.getSession().setAttribute("fenye",fenye);
+        }
         return "main1";
     }
 }

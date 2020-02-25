@@ -66,6 +66,11 @@ public interface RestaurantDao {
      */
     List<Order> selectAllOrder(Order order);
     /**
+     * 删除顶单
+     * @param order 订单实体类
+     */
+    void deleteOrderbyTime(Order order);
+    /**
      * 添加评论
      * @param comment 评论实体类
      */
@@ -113,6 +118,13 @@ public interface RestaurantDao {
      * @return Restauart 餐馆实体类
      */
     List<Restaurant> selectRestaurantbytel(String tel);
+    /**
+     * 注销餐馆
+     * @param id 餐馆id
+     */
+    void deletecityRestaurantbyrid(int id);
+    void deletedishRestaurantbyrid(int id);
+    void deleteRestaurant(int id);
     /**
      * 上架、下架
      * @param dish

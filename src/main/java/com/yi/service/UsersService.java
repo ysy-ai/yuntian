@@ -34,4 +34,9 @@ public interface UsersService {
      * @param users 用户实体类
      */
     void updateUsers(Users users);
+    /**
+     * 用户注销
+     * @param tel 电话
+     */
+    void deleteUser(String tel);
 }

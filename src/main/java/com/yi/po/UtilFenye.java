@@ -9,6 +9,7 @@ public class UtilFenye {
     private int d2;
     private int pageNow;
     private String name;
+    private String sign;
 
     public int getD1() {
         return d1;
@@ -42,12 +43,22 @@ public class UtilFenye {
         this.pageNow = pageNow;
     }
 
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
+    }
+
     @Override
     public String toString() {
         return "UtilFenye{" +
                 "d1=" + d1 +
                 ", d2=" + d2 +
+                ", pageNow=" + pageNow +
                 ", name='" + name + '\'' +
+                ", sign='" + sign + '\'' +
                 '}';
     }
 }

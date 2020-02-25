@@ -91,6 +91,7 @@ public class UsersController {
      */
     @RequestMapping("/register")
     public String register(Users users, HttpServletRequest request) {
+        System.out.println(users);
         if (usersService.selectTel(users)) {
             usersService.insertUsers(users);
             return "login";
@@ -181,5 +182,15 @@ public class UsersController {
         }
         return "personMessage";
     }
-
+    /**
+     * 用户注销
+     */
+    @RequestMapping("/deleteUser")
+    public String deleteUser(HttpServletRequest request){
+        if((String) request.getSession().getAttribute("tel")==null){
+            return "login";
+        }
+        usersService.deleteUser((String) request.getSession().getAttribute("tel"));
+        return "deleteUser";
+    }
 }
