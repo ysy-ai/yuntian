@@ -14,7 +14,7 @@
 </head>
 <body>
 <h3 style="width: 100px;height: 20px;margin-left: 350px;float: left">旗舰店</h3>
-<h3 style="width: 100px;height: 20px;margin-left: 510px;float: left"><a style="text-decoration: none;color: black" href="jsp/businessCenter.jsp">商家中心</a></h3>
+<h3 style="width: 100px;height: 20px;margin-left: 510px;float: left"><a style="text-decoration: none;color: black" href="businesscenter">商家中心</a></h3>
 <div style="margin-left: 350px;width: 700px;height: 700px">
     <c:forEach items="${list }" var="restaurant">
     <div style="width: 700px;height:250px;border-bottom: 1px solid silver;float: left;margin-top: 20px">
@@ -31,6 +31,7 @@
     <a style="float: left;margin-left: 380px;text-decoration: none;color: black" href="deleteRestaurant?id=${restaurant.id }&tel=${restaurant.tel }"><h3 style="width: 80px;height: 30px">注销</h3></a>
     </div>
         </c:forEach>
+        <h3 style="float: left;margin-left: 250px">${isEmpty}</h3>
     </div>
 </body>
 </html>

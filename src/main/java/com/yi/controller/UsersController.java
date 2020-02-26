@@ -1,6 +1,7 @@
 package com.yi.controller;
 
 import com.yi.po.Users;
+import com.yi.service.RestaurantService;
 import com.yi.service.UsersService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author yisy
@@ -22,8 +25,10 @@ public class UsersController {
      * 自动注入
      */
     private final UsersService usersService;
-    public UsersController(UsersService usersService) {
+    private final RestaurantService restaurantService;
+    public UsersController(UsersService usersService,RestaurantService restaurantService) {
         this.usersService = usersService;
+        this.restaurantService = restaurantService;
     }
     /**
      * 判断是否登录
@@ -36,14 +41,14 @@ public class UsersController {
             return "login";
         }
         users.setTel((String) request.getSession().getAttribute("tel"));
-        Users users1 = usersService.selectUsers(users);
+        Users users1 = usersService.selectUsername(users);
         request.getSession().setAttribute("users1",users1);
         request.getSession().setAttribute("username", username);
         return "yuantian";
     }
 
     /**
-     * 用户登录
+     * 用户登录(已弃用)
      * 验证用户名是否存在
      */
     @RequestMapping(value = "/validateUser", method = RequestMethod.POST, produces = {"text/html;charset=utf-8"})
@@ -57,29 +62,36 @@ public class UsersController {
     }
 
     /**
-     * 验证密码
+     * 用户登录
      */
     @RequestMapping(value = "/validatePassword", method = RequestMethod.POST)
     public String validatePassword(Users users, HttpServletRequest request) {
-        boolean flag = usersService.selectPassword(users);
-        Users users1 = usersService.selectUsers(users);
+        boolean flag = usersService.selectTel(users);
         if (flag) {
-            //创建初始昵称
-            users.setId(users1.getId());
-            users.setHeadPortrait(users1.getHeadPortrait());
-            users.setBirthday(users1.getBirthday());
-            users.setStatus(users1.getStatus());
-            if (users1.getUsername()==null) {
-                users.setUsername(users.getTel());
-            }else{
-                users.setUsername(users1.getUsername());
+            request.setAttribute("error", "账号不存,请前往注册");
+            return "login";
+        }
+        boolean flag1 = usersService.selectPassword(users);
+        if (flag1) {
+            Users users1 = usersService.selectUsers(users);
+            if(users1.getStatus().equals("0")){
+                //创建初始昵称
+                users.setId(users1.getId());
+                users.setBirthday(users1.getBirthday());
+                users.setStatus(users1.getStatus());
+                if (users1.getUsername()==null) {
+                    users.setUsername(users.getTel());
+                }else{
+                    users.setUsername(users1.getUsername());
+                }
+                usersService.updateUsers(users);
+                request.getSession().setAttribute("tel", users.getTel());
+                request.getSession().setAttribute("username", users.getUsername());
+                if("0".equals(users1.getStatus())){
+                    return "main1";
+                }
             }
-            usersService.updateUsers(users);
             request.getSession().setAttribute("tel", users.getTel());
-            request.getSession().setAttribute("username", users.getUsername());
-            if("0".equals(users1.getStatus())){
-                return "main1";
-            }
             return "businessCenter";
         }
         request.setAttribute("error", "密码错误，请重新输入");
@@ -92,11 +104,31 @@ public class UsersController {
     @RequestMapping("/register")
     public String register(Users users, HttpServletRequest request) {
         System.out.println(users);
-        if (usersService.selectTel(users)) {
-            usersService.insertUsers(users);
-            return "login";
+        String pattern = "^1\\d{10}$";
+        // 创建 Pattern 对象
+        Pattern r = Pattern.compile(pattern);
+        System.out.println(r+"pattern");
+        // 现在创建 matcher 对象
+        Matcher m = r.matcher(users.getTel());
+        if(m.find()==true){
+            if (usersService.selectTel(users)) {
+                if(users.getPassword().equals(users.getPasswords())){
+                    if(users.getStatus()!=null){
+                        usersService.insertUsers(users);
+                        return "login";
+                    }
+                    request.setAttribute("error", "请选择普通用户或商家！");
+                    return "register";
+                }
+                request.setAttribute("error", "密码错误，请重新输入!");
+                return "register";
+            }
         }
-        request.getSession().setAttribute("error", "用户存在,请直接登录");
+        if(m.find()==false){
+            request.setAttribute("error", "请输入正确的账号格式!");
+            return "register";
+        }
+        request.setAttribute("error", "用户存在,请直接登录");
         return "login";
     }
 
@@ -114,13 +146,11 @@ public class UsersController {
      * 上传头像
      */
     @RequestMapping("/upload")
-    public String upload(MultipartFile file, HttpServletRequest request) {
-        Users users2 = new Users();
-        users2.setTel((String) request.getSession().getAttribute("tel"));
+    public String upload(MultipartFile file, HttpServletRequest request,Users users1) {
         // 获得原始文件名
         String fileName = file.getOriginalFilename();
         // 新文件名
-        String newFileName = "head" + ".jpg";
+        String newFileName = request.getSession().getAttribute("tel") + ".jpg";
         // 获得项目的路径
         ServletContext sc = request.getSession().getServletContext();
         // 上传位置
@@ -141,7 +171,10 @@ public class UsersController {
             }
         }
         //路径存入数据库
-        Users users = usersService.selectUsers(users2);
+        users1.setTel((String) request.getSession().getAttribute("tel"));
+        users1.setUsername((String) request.getSession().getAttribute("username"));
+        Users users = usersService.selectUsername(users1);
+        System.out.println(users);
         users.setHeadPortrait("images/"+newFileName);
         users.setTel((String) request.getSession().getAttribute("tel"));
         usersService.updateUsers(users);
@@ -188,9 +221,39 @@ public class UsersController {
     @RequestMapping("/deleteUser")
     public String deleteUser(HttpServletRequest request){
         if((String) request.getSession().getAttribute("tel")==null){
+            request.getSession().setAttribute("error","请先登录!");
             return "login";
         }
         usersService.deleteUser((String) request.getSession().getAttribute("tel"));
+        restaurantService.deleteRestaurantbyTel((String) request.getSession().getAttribute("tel"));
         return "deleteUser";
+    }
+    /**
+     * 退出
+     */
+    @RequestMapping("/exit")
+    public String exit(){
+        return "../index";
+    }
+    /**
+     * 注册center
+     */
+    @RequestMapping("/zhu")
+    public String zhu(){
+        return "register";
+    }
+    /**
+     * 登录center
+     */
+    @RequestMapping("/deng")
+    public String deng(){
+        return "login";
+    }
+    /**
+     * personcenter
+     */
+    @RequestMapping("/personcenter")
+    public String personcenter(){
+        return "personMessage";
     }
 }

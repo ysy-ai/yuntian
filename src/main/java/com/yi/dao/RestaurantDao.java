@@ -66,7 +66,7 @@ public interface RestaurantDao {
      */
     List<Order> selectAllOrder(Order order);
     /**
-     * 删除顶单
+     * 根据时间和名字删除订单
      * @param order 订单实体类
      */
     void deleteOrderbyTime(Order order);
@@ -113,6 +113,17 @@ public interface RestaurantDao {
      */
     void insertCityrestaurant(Cityrestaurant cityrestaurant);
     /**
+     * 查询菜系
+     * @param cname 菜系名称
+     * @return String
+     */
+     String selectCuidsine(String cname);
+    /**
+     * 添加菜系
+     * @param cname 菜系名称
+     */
+    void insertCuidsine(String cname);
+    /**
      * 商家详情
      * @param tel
      * @return Restauart 餐馆实体类
@@ -125,6 +136,11 @@ public interface RestaurantDao {
     void deletecityRestaurantbyrid(int id);
     void deletedishRestaurantbyrid(int id);
     void deleteRestaurant(int id);
+    /**
+     * 根据商家删除餐馆
+     * @param tel 电话
+     */
+    void deleteRestaurantbyTel(String tel);
     /**
      * 上架、下架
      * @param dish
@@ -156,4 +172,11 @@ public interface RestaurantDao {
      * @param dishrestaurant
      */
     void insertDishRestaurant(Dishrestaurant dishrestaurant);
+    /**
+     * 全局搜索餐馆
+     * @param utilFenye
+     * @return Restaurant
+     */
+    List<Restaurant> selectRestaurantByRnameAndDishname(UtilFenye utilFenye);
+    int selectCountRestaurant(UtilFenye utilFenye);
 }

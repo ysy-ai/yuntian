@@ -38,8 +38,8 @@
         <li style="font-size: 20px"><a id="d8" href="#" style="color: black;">我的收藏</a></li>
         <li style="font-size: 17px"><a id="d9" href="#" style="color: silver;">收藏的商家　　　　　></a></li>
         <li style="font-size: 17px"><a id="d10" href="#" style="color: silver;">收藏的团购　　　　　></a></li>
-        <li style="font-size: 20px"><a id="d11" href="personMessage.jsp" style="color: black;">个人信息</a></li>
-        <li style="font-size: 17px"><a id="d12" href="personMessage.jsp" style="color: silver;">账户设置　　　　　　></a></li>
+        <li style="font-size: 20px"><a id="d11" href="insertDish" style="color: black;">个人信息</a></li>
+        <li style="font-size: 17px"><a id="d12" href="insertDish" style="color: silver;">账户设置　　　　　　></a></li>
     </ul>
 
 </div>
@@ -70,7 +70,7 @@
                     ${allOrder.status}
             </div>
             <a style="float: left;margin-left: 70px;margin-top: 50px;text-decoration: none;color: black;font-size: 15px"
-               href="deleteOrder"><strong>删除</strong></a>
+               href="deleteOrder?name=${allOrder.rname}&time=${allOrder.time}"><strong>删除</strong></a>
         </div>
         <div style="width: 680px;float: left;margin-left: 60px;margin-top: 20px;border: 0.5px silver solid"></div>
     </c:forEach>

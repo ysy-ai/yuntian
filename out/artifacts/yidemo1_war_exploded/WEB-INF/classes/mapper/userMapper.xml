@@ -2,16 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yi.dao.UsersDao">
     <!--登录-->
+    <select id="selectTel" parameterType="Users" resultType="Users">
+        select * from user where  tel = #{tel}
+    </select>
     <select id="selectUsers" parameterType="Users" resultType="Users">
-        select * from user
-        <where>
-            <if test="tel != null">
-                AND tel = #{tel}
-            </if>
-            <if test="password != null">
-                AND password = #{password}
-            </if>
-        </where>
+        select * from user where tel = #{tel} AND password = #{password}
+    </select>
+    <select id="selectUsername" parameterType="Users" resultType="Users">
+        select * from user where tel = #{tel} AND  username = #{username}
     </select>
 
     <!--注册-->

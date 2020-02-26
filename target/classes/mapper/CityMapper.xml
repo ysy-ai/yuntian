@@ -33,11 +33,11 @@
 
     <!--按菜系名称查询餐馆数量-->
     <select id="selectrestauantcountBycuidisine" parameterType="string" resultType="int">
-        select count(r.id) from cuidsine c,restaurant r,cuidsinerestaurant cr where cr.cuidsineid=c.id and cr.restaurantid=r.id and c.cname=#{name}
+        select count(r.id) from city c,restaurant r,cityrestaurant cr where cr.cityid=c.id and cr.restaurantid=r.id and c.cityname=#{cityname} and r.type = #{name}
     </select>
     <!--按菜系名称查询餐馆-->
     <select id="selectrestauantBycuidisine" parameterType="UtilFenye" resultType="Restaurant">
-        select r.* from cuidsine c,restaurant r,cuidsinerestaurant cr where cr.cuidsineid=c.id and cr.restaurantid=r.id and c.cname=#{name} limit #{d1},#{d2}
+        select r.* from city c,restaurant r,cityrestaurant cr where cr.cityid=c.id and cr.restaurantid=r.id and c.cityname=#{cityname} and r.type = #{name} limit 0,2
     </select>
     <!--按城市名称查询餐馆数量-->
     <select id="selectrestauantcountBycity" parameterType="string" resultType="int">

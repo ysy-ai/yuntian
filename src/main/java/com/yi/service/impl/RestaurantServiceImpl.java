@@ -184,6 +184,24 @@ public class RestaurantServiceImpl implements RestaurantService {
         restaurantDao.insertCityrestaurant(cityrestaurant);
     }
     /**
+     * 查询菜系
+     * @param cname 菜系名称
+     * @return String
+     */
+    @Override
+    public String selectCuidsine(String cname) {
+        return restaurantDao.selectCuidsine(cname);
+    }
+    /**
+     * 添加菜系
+     * @param cname 菜系名称
+     */
+    @Override
+    public void insertCuidsine(String cname) {
+        restaurantDao.insertCuidsine(cname);
+    }
+
+    /**
      * 商家详情
      * @param tel
      * @return Restauart 餐馆实体类
@@ -210,6 +228,14 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public void deleteRestaurant(int id) {
         restaurantDao.deleteRestaurant(id);
+    }
+    /**
+     * 根据商家删除餐馆
+     * @param tel 电话
+     */
+    @Override
+    public void deleteRestaurantbyTel(String tel) {
+        restaurantDao.deleteRestaurantbyTel(tel);
     }
 
     /**
@@ -261,6 +287,29 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public void insertDishRestaurant(Dishrestaurant dishrestaurant) {
         restaurantDao.insertDishRestaurant(dishrestaurant);
+    }
+    /**
+     * 全局搜索餐馆
+     * @param utilFenye
+     * @return Fenye
+     */
+    @Override
+    public Fenye selectRestaurantByRnameAndDishname(UtilFenye utilFenye) {
+        System.out.println(utilFenye+"3333");
+        Fenye fenye=new Fenye();
+        fenye.setPageCount(2);
+        //总条数
+        int totalCount=restaurantDao.selectCountRestaurant(utilFenye);
+        fenye.setTotalCount(totalCount);
+        fenye.setPageNow(utilFenye.getPageNow());
+        int d1=(fenye.getPageNow()-1)*fenye.getPageCount();
+        int d2=2;
+        utilFenye.setD1(d1);
+        utilFenye.setD2(d2);
+        utilFenye.setName(utilFenye.getName());
+        List<Restaurant> list=restaurantDao.selectRestaurantByRnameAndDishname(utilFenye);
+        fenye.setList(list);
+        return fenye;
     }
 
 

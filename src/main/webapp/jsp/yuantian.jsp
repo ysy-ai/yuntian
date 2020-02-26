@@ -37,8 +37,8 @@
         <li style="font-size: 20px"><a id="d8" href="#" style="color: black;">我的收藏</a></li>
         <li style="font-size: 17px"><a id="d9" href="#" style="color: silver;">收藏的商家　　　　　></a></li>
         <li style="font-size: 17px"><a id="d10" href="#" style="color: silver;">收藏的团购　　　　　></a></li>
-        <li style="font-size: 20px"><a id="d11" href="personMessage.jsp" style="color: black;">个人信息</a></li>
-        <li style="font-size: 17px"><a id="d12" href="personMessage.jsp" style="color: silver;">账户设置　　　　　　></a></li>
+        <li style="font-size: 20px"><a id="d11" href="personcenter" style="color: black;">个人信息</a></li>
+        <li style="font-size: 17px"><a id="d12" href="personcenter" style="color: silver;">账户设置　　　　　　></a></li>
     </ul>
 
 </div>
@@ -76,24 +76,6 @@
             </div>
         </div>
     </c:forEach>
-
-    <c:forEach var="allOrder" items="${list}">
-        <div style="width: 800px;float: left;margin-top: 20px;margin-left: 60px">
-        <img src="${allOrder.pictureUrl}" style="width: 100px;height: 100px;float: left;border-radius: 5%">
-            <div style="float: left;font-size: 10px;margin-left: 10px">
-        <div style="font-size: 17px;color: #1a252f;margin-top: 20px">${allOrder.dishname}</div>
-        餐馆：${allOrder.rname}<br>
-        数量：${allOrder.count}<br>
-        下单时间：${allOrder.time}
-            </div>
-            <div style="float: left;margin-left: 140px;font-size: 10px;margin-top: 50px">
-        总价：￥${allOrder.total}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        ${allOrder.status}
-        </div>
-        </div>
-        <div style="width: 680px;float: left;margin-left: 60px;margin-top: 20px;border: 0.5px silver solid"></div>
-    </c:forEach>
-
     </div>
 
 </div>

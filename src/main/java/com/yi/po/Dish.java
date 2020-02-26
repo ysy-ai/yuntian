@@ -23,17 +23,19 @@ public class Dish {
      */
     private int status;
     private String statusDetails;
+    private String cuidsine;
     private String rname;
 
     public Dish(){}
 
-    public Dish(int id, String dishName, int price, String pictureUrl, int status, String statusDetails, String rname) {
+    public Dish(int id, String dishName, int price, String pictureUrl, int status, String statusDetails, String cuidsine, String rname) {
         this.id = id;
         this.dishName = dishName;
         this.price = price;
         this.pictureUrl = pictureUrl;
         this.status = status;
         this.statusDetails = statusDetails;
+        this.cuidsine = cuidsine;
         this.rname = rname;
     }
 
@@ -77,20 +79,28 @@ public class Dish {
         this.status = status;
     }
 
-    public String getRname() {
-        return rname;
-    }
-
-    public void setRname(String rname) {
-        this.rname = rname;
-    }
-
     public String getStatusDetails() {
         return statusDetails;
     }
 
     public void setStatusDetails(String statusDetails) {
         this.statusDetails = statusDetails;
+    }
+
+    public String getCuidsine() {
+        return cuidsine;
+    }
+
+    public void setCuidsine(String cuidsine) {
+        this.cuidsine = cuidsine;
+    }
+
+    public String getRname() {
+        return rname;
+    }
+
+    public void setRname(String rname) {
+        this.rname = rname;
     }
 
     @Override
@@ -102,6 +112,7 @@ public class Dish {
                 ", pictureUrl='" + pictureUrl + '\'' +
                 ", status=" + status +
                 ", statusDetails='" + statusDetails + '\'' +
+                ", cuidsine='" + cuidsine + '\'' +
                 ", rname='" + rname + '\'' +
                 '}';
     }

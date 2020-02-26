@@ -35,7 +35,7 @@
         <li style="font-size: 20px"><a id="d8" href="#" style="color: black;">我的收藏</a></li>
         <li style="font-size: 17px"><a id="d9" href="#" style="color: silver;">收藏的商家　　　　　></a></li>
         <li style="font-size: 17px"><a id="d10" href="#" style="color: silver;">收藏的团购　　　　　></a></li>
-        <li style="font-size: 20px"><a id="d11" href="jsp/personMessage.jsp" style="color: black;">个人信息</a></li>
+        <li style="font-size: 20px"><a id="d11" href="insertDish" style="color: black;">个人信息</a></li>
         <li style="font-size: 17px"><a id="d12" href="#" style="color: silver;">账户设置　　　　　　></a></li>
     </ul>
 
@@ -46,14 +46,10 @@
     <div style="width: 750px;height: 100px;line-height: 100px;margin-left: 25px;border-bottom: 1px silver solid">个人信息
         账户设置
     </div>
-    <%-- <div style="width: 750px;height: 100px;line-height: 100px;margin-left: 25px;border-bottom: 1px silver solid">
-         头像
-
-     </div>--%>
     <div style="width: 750px;height: 100px;line-height: 100px;margin-left: 25px;border-bottom: 1px silver solid">
         <form action="/upload" method="post" enctype="multipart/form-data">
             选择本地照片:<input type="file" name="file" style="height: 50px;width: 120px"/><input
-                style="width: 80px;height: 40px;margin-left: 445px;background-color: sandybrown;" type="submit"
+                style="width: 80px;height: 40px;margin-left: 415px;background-color: sandybrown;" type="submit"
                 value="修改"/>
         </form>
         </form>

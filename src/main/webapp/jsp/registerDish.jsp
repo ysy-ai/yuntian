@@ -95,7 +95,7 @@
 <body>
 <div class="pop">
     <div class="pop-wp">
-        <a href="businessCenter.jsp" class="pop-close">商家中心</a>
+        <a href="businesscenter" class="pop-close">商家中心</a>
         <div class="pop-title">新增菜品</div>
         <form action="/upperShelf" method="post" enctype="multipart/form-data">
             <div class="account-form">

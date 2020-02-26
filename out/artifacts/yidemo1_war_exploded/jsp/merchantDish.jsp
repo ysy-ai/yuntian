@@ -15,8 +15,8 @@
 <body>
 <div style="margin-left: 500px;margin-top: 10px;width: 800px;line-height: 60px;float: left">
     <h4 style="float: left;height: 30px">菜单</h4>
-    <h4 style="float: left;height: 30px;margin-left: 580px;text-decoration: none;color: black"><a href="jsp/registerDish.jsp">添加新菜</a></h4>
-    <h4 style="float: left;height: 30px;margin-left: 50px;text-decoration: none;color: black"><a href="jsp/businessCenter.jsp">商家中心</a></h4>
+    <h4 style="float: left;height: 30px;margin-left: 580px;text-decoration: none;color: black"><a href="insertDish">添加新菜</a></h4>
+    <h4 style="float: left;height: 30px;margin-left: 50px;text-decoration: none;color: black"><a href="businesscenter">商家中心</a></h4>
         <table border="1" style="width: 800px;height: 40px;text-align: center">
             <tr>
                 <td>图片</td>

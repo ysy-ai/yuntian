@@ -81,7 +81,6 @@ public class CityController {
     @RequestMapping("/getCityname")
     public String getCityname (String cityname1,HttpServletRequest request,UtilFenye utilFenye) {
         if (cityname1!=null) {
-            System.out.println("444"+cityname1);
             String a = ",";
             String b = " ";
             String cityname2 = cityname1.replace(a, "").replace(b, "");
@@ -100,7 +99,6 @@ public class CityController {
         //isEmpty():判断字符串是否为null
         String str = "cityname";
         if (!request.getParameter("cityname").isEmpty()&&request.getParameter(str)!=null&&!request.getParameter(str).equals("null")) {
-            System.out.println("1111");
             //按当前城市名称查询所在省份的所有城市
             String cityname = new String(request.getParameter("cityname").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
             request.getSession().setAttribute("city",cityname);
@@ -136,7 +134,13 @@ public class CityController {
             utilFenye.setSign(sign);
         }
         if("cu".equals(utilFenye.getSign())){
+            utilFenye.setCityname((String) request.getSession().getAttribute("city"));
             Fenye fenye = cityService.selectrestauantBycuidisine(utilFenye);
+            if(fenye.getList().isEmpty() ){
+                request.getSession().setAttribute("fenye",fenye);
+                request.getSession().setAttribute("noMessage","对不起，没有符合条件的商家");
+                return "main1";
+            }
             for (Restaurant restaurant:fenye.getList()) {
                 restaurant.setCommentcount(restaurantService.selectCountComment(restaurant.getRname()));
             }
@@ -146,6 +150,11 @@ public class CityController {
             Fenye fenye = cityService.selectrestauantBycity(utilFenye);
             for (Restaurant restaurant:fenye.getList()) {
                 restaurant.setCommentcount(restaurantService.selectCountComment(restaurant.getRname()));
+            }
+            if(fenye.getList().isEmpty()){
+                request.getSession().setAttribute("fenye",fenye);
+                request.getSession().setAttribute("noMessage","对不起，没有符合条件的商家");
+                return "main1";
             }
             request.getSession().setAttribute("fenye",fenye);
         }

@@ -36,10 +36,14 @@ public class Restaurant {
      * 人均价格
      */
     private Double perprice;
+    /**
+     * 餐馆类型
+     */
+    private String type;
 
     public Restaurant(){}
 
-    public Restaurant(int id, String rname, int score, int commentcount, String address, String tel, String url, Double perprice) {
+    public Restaurant(int id, String rname, int score, int commentcount, String address, String tel, String url, Double perprice,String type) {
         this.id = id;
         this.rname = rname;
         this.score = score;
@@ -48,6 +52,7 @@ public class Restaurant {
         this.tel = tel;
         this.url = url;
         this.perprice = perprice;
+        this.type = type;
     }
 
     public int getId() {
@@ -114,6 +119,14 @@ public class Restaurant {
         this.perprice = perprice;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "Restaurant{" +
@@ -125,6 +138,7 @@ public class Restaurant {
                 ", tel='" + tel + '\'' +
                 ", url='" + url + '\'' +
                 ", perprice=" + perprice +
+                ", type='" + type + '\'' +
                 '}';
     }
 }

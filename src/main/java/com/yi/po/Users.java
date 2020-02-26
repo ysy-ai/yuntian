@@ -20,6 +20,7 @@ public class Users{
      * 密码
      */
     private String password;
+    private String passwords;
     /**
      * 头像
      */
@@ -36,11 +37,12 @@ public class Users{
 
     public Users(){}
 
-    public Users(int id, String tel, String username, String password, String headPortrait, String birthday, String status) {
+    public Users(int id, String tel, String username, String password, String passwords,String headPortrait, String birthday, String status) {
         this.id = id;
         this.tel = tel;
         this.username = username;
         this.password = password;
+        this.passwords = passwords;
         this.headPortrait = headPortrait;
         this.birthday = birthday;
         this.status = status;
@@ -102,6 +104,14 @@ public class Users{
         this.status = status;
     }
 
+    public String getPasswords() {
+        return passwords;
+    }
+
+    public void setPasswords(String passwords) {
+        this.passwords = passwords;
+    }
+
     @Override
     public String toString() {
         return "Users{" +
@@ -109,11 +119,11 @@ public class Users{
                 ", tel='" + tel + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", passwords='" + passwords + '\'' +
                 ", headPortrait='" + headPortrait + '\'' +
                 ", birthday='" + birthday + '\'' +
                 ", status='" + status + '\'' +
                 '}';
-
-}
+    }
 }
 

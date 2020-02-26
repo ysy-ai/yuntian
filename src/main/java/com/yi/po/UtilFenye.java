@@ -10,6 +10,8 @@ public class UtilFenye {
     private int pageNow;
     private String name;
     private String sign;
+    private String rname;
+    private String cityname;
 
     public int getD1() {
         return d1;
@@ -51,6 +53,22 @@ public class UtilFenye {
         this.sign = sign;
     }
 
+    public String getRname() {
+        return rname;
+    }
+
+    public void setRname(String rname) {
+        this.rname = rname;
+    }
+
+    public String getCityname() {
+        return cityname;
+    }
+
+    public void setCityname(String cityname) {
+        this.cityname = cityname;
+    }
+
     @Override
     public String toString() {
         return "UtilFenye{" +
@@ -59,6 +77,8 @@ public class UtilFenye {
                 ", pageNow=" + pageNow +
                 ", name='" + name + '\'' +
                 ", sign='" + sign + '\'' +
+                ", rname='" + rname + '\'' +
+                ", cityname='" + cityname + '\'' +
                 '}';
     }
 }

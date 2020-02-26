@@ -151,9 +151,9 @@
         </where>
             ) o
     </select>
-    <!--删除订单-->
+    <!--根据时间和名字删除订单-->
     <delete id="deleteOrderbyTime" parameterType="Order">
-        delete from `order`where name = #{name} and time = #{time}
+        DELETE FROM `order`WHERE time = #{time} and `name` LIKE #{name}
     </delete>
 
     <!--添加评论-->
@@ -236,6 +236,9 @@
             <if test="url != null">
                 url,
             </if>
+            <if test="type != null">
+                type,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -262,6 +265,9 @@
             <if test="url != null">
                 #{url},
             </if>
+            <if test="type != null">
+                #{type},
+            </if>
         </trim>
     </insert>
     <select id="selectIdbycityname" parameterType="String" resultType="int">
@@ -272,6 +278,12 @@
     </select>
     <insert id="insertCityrestaurant" parameterType="Cityrestaurant">
         insert into cityrestaurant(cityid,restaurantid) values (#{cityid},#{restaurantid})
+    </insert>
+    <select id="selectCuidsine" parameterType="String" resultType="String">
+        select cname from cuidsine where cname = #{cname}
+    </select>
+    <insert id="insertCuidsine" parameterType="String">
+        insert into cuidsine(cname) values (#{cname})
     </insert>
     <!--商家详情-->
     <select id="selectRestaurantbytel" parameterType="String" resultType="Restaurant">
@@ -286,6 +298,10 @@
     </delete>
     <delete id="deleteRestaurant" parameterType="int">
         delete from restaurant where id = #{id}
+    </delete>
+    <!--根据商家删除餐馆-->
+    <delete id="deleteRestaurantbyTel" parameterType="String">
+        delete from restaurant where tel = #{tel}
     </delete>
     <!--上架、下架-->
     <update id="updateDishStatus" parameterType="Dish">
@@ -308,5 +324,14 @@
     <insert id="insertDishRestaurant" parameterType="Dishrestaurant">
         insert into dishrestaurant(dishid,restaurantid) values (#{dishid},#{restaurantid})
     </insert>
+    <!--全网搜索餐馆-->
+    <select id="selectCountRestaurant" parameterType="UtilFenye" resultType="int">
+        select count(r.id) from city c,restaurant r,cityrestaurant cr
+        where cr.cityid=c.id and cr.restaurantid=r.id and c.cityname=#{cityname} and r.rname = #{rname} limit 0,2
+    </select>
+    <select id="selectRestaurantByRnameAndDishname" parameterType="UtilFenye" resultType="Restaurant">
+        select r.* from city c,restaurant r,cityrestaurant cr
+        where cr.cityid=c.id and cr.restaurantid=r.id and c.cityname=#{cityname} and r.rname like #{rname} limit 0,2
+    </select>
 </mapper>
 

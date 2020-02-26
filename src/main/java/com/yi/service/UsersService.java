@@ -11,6 +11,7 @@ public interface UsersService {
      * @return Users 用户实体类
      */
     Users selectUsers(Users users);
+    Users selectUsername(Users users);
     /**
      * 登录
      * 验证用户名

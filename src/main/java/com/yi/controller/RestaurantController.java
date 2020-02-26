@@ -224,9 +224,13 @@ public class RestaurantController {
             order1.setTel((String) request.getSession().getAttribute("tel"));
             String str = "1";
             if (status1.equals(str)) {
+                request.getSession().setAttribute("status1","1");
                 order1.setStatus(1);
             }
             List<Order> orders = restaurantService.selectAllOrder(order1);
+            if(orders.isEmpty()){
+                request.setAttribute("message","对不起，没有待付款的订单!");
+            }
             List<AllOrder> list = new ArrayList<>();
             for (Order order:orders) {
                 AllOrder allOrder = new AllOrder();
@@ -236,7 +240,6 @@ public class RestaurantController {
                 //数量
                 order.setTel((String) request.getSession().getAttribute("tel"));
                 int count = restaurantService.selectCountOrder(order);
-                System.out.println("count: "+count);
                 //日期
                 String time = order.getTime();
                 //总价
@@ -266,11 +269,60 @@ public class RestaurantController {
         return "orderDisplay";
     }
     /**
-     * 删除订单
+     * 根据时间和名字删除订单
      */
     @RequestMapping("/deleteOrder")
-    public String deleteOrder(HttpServletRequest request , Order order){
-        restaurantService.deleteOrderbyTime(order);
+    public String deleteOrder(HttpServletRequest request , Order order1){
+        try {
+            String name = new String(order1.getName().getBytes("ISO_8859_1"), StandardCharsets.UTF_8);
+            order1.setName("%"+name+"%");
+            restaurantService.deleteOrderbyTime(order1);
+            order1.setTel((String) request.getSession().getAttribute("tel"));
+            String status1 = (String) request.getSession().getAttribute("status1");
+            if (status1!=null) {
+                order1.setStatus(1);
+            }
+            List<Order> orders = restaurantService.selectAllOrder(order1);
+            if(orders.isEmpty()&&status1!=null){
+                request.setAttribute("message","对不起，没有待付款的订单!");
+            }
+            if(orders.isEmpty()&&status1==null){
+                request.setAttribute("message","对不起，目前您暂无订单!");
+            }
+            List<AllOrder> list = new ArrayList<>();
+            for (Order order:orders) {
+                AllOrder allOrder = new AllOrder();
+                //菜名
+                String rname = order.getName().substring(0, order.getName().indexOf(":")).trim();
+                String dishName = order.getName().substring(order.getName().indexOf(":") + 1).trim();
+                //数量
+                order.setTel((String) request.getSession().getAttribute("tel"));
+                int count = restaurantService.selectCountOrder(order);
+                //日期
+                String time = order.getTime();
+                //总价
+                int price = restaurantService.selectDishPrice(dishName);
+                int total = price*count;
+                //付款状态
+                int status = order.getStatus();
+                if(status==1){
+                    allOrder.setStatus("待付款");
+                }
+                if(status==2){
+                    allOrder.setStatus("已付款");
+                }
+                allOrder.setPictureUrl(order.getPictureUrl());
+                allOrder.setDishname(dishName);
+                allOrder.setRname(rname);
+                allOrder.setCount(count);
+                allOrder.setTime(time);
+                allOrder.setTotal(total);
+                list.add(allOrder);
+            }
+            request.setAttribute("list",list);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         return "orderDisplay";
     }
     /**
@@ -278,17 +330,17 @@ public class RestaurantController {
      */
     @RequestMapping("/noused")
     public String noused(HttpServletRequest request){
-        request.getSession().setAttribute("message","对不起，没有可以使用的订单!");
+        request.setAttribute("message","对不起，没有可以使用的订单!");
         return "orderDisplay";
     }
     @RequestMapping("/nocomment")
     public String nocomment(HttpServletRequest request){
-        request.getSession().setAttribute("message","对不起，没有可以评价的订单!");
+        request.setAttribute("message","对不起，没有可以评价的订单!");
         return "orderDisplay";
     }
     @RequestMapping("/refund")
     public String refund(HttpServletRequest request){
-        request.getSession().setAttribute("message","对不起，没有可以使用的订单!");
+        request.setAttribute("message","对不起，没有可以使用的订单!");
         return "orderDisplay";
     }
     /**
@@ -312,12 +364,14 @@ public class RestaurantController {
     /**
      * 商家注册
      */
+    @RequestMapping("/registerRestaurantcenter")
+    public String registerRestaurantcenter(){
+        return "registerRestaurant";
+    }
     @RequestMapping("/registerRestaurant")
     public String registerRestaurant(MultipartFile file, Restaurant restaurant, HttpServletRequest request) {
-        System.out.println(restaurant);
         // 获得原始文件名
         String fileName = file.getOriginalFilename();
-        System.out.println(fileName);
         // 上传位置
         // 设定文件保存的目录
         String path = "C:/Users/86132/IdeaProjects/yidemo1/src/main/webapp/images";
@@ -338,7 +392,6 @@ public class RestaurantController {
         //路径存入数据库
         System.out.println(fileName);
         restaurant.setUrl("images/" + fileName);
-        System.out.println(restaurant);
         restaurantService.insertRestauart(restaurant);
         int cityid = restaurantService.selectIdbycityname((String) request.getSession().getAttribute("city"));
         int restaurantid = restaurantService.selectLastRestaurant();
@@ -347,6 +400,9 @@ public class RestaurantController {
         cityrestaurant.setRestaurantid(restaurantid);
         restaurantService.insertCityrestaurant(cityrestaurant);
         request.getSession().setAttribute("success", "注册成功");
+        if(restaurantService.selectCuidsine(restaurant.getType())==null){
+            restaurantService.insertCuidsine(restaurant.getType());
+        }
         return "registerRestaurant";
     }
     /**
@@ -355,6 +411,10 @@ public class RestaurantController {
     @RequestMapping("/merchantDetails")
     public String merchantDetails(HttpServletRequest request){
         List<Restaurant> list = restaurantService.selectRestaurantbytel((String) request.getSession().getAttribute("tel"));
+        if(list.isEmpty()){
+            request.getSession().setAttribute("isEmpty","您暂无爱店，快去注册吧！");
+            return "merchantDetails";
+        }
         request.getSession().setAttribute("list",list);
         return "merchantDetails";
     }
@@ -451,7 +511,45 @@ public class RestaurantController {
         request.getSession().setAttribute("success", "新增成功");
         return "registerDish";
     }
-
+    /**
+     * 全局搜索餐馆
+     */
+    @RequestMapping("/selectRestaurantByRnameAndDishname")
+    public String selectRestaurantByRnameAndDishname(UtilFenye utilFenye,HttpServletRequest request){
+        try {
+            String cityname = new String(utilFenye.getCityname().getBytes("ISO-8859-1"),"utf-8");
+            utilFenye.setCityname(cityname);
+            utilFenye.setRname("%"+utilFenye.getRname()+"%");
+            Fenye fenye = restaurantService.selectRestaurantByRnameAndDishname(utilFenye);
+            if(fenye.getList().isEmpty()){
+                fenye.setPageNow(1);
+                request.getSession().setAttribute("fenye",fenye);
+                request.getSession().setAttribute("noMessage","对不起，没有符合条件的商家");
+                return "main1";
+            }
+            for (Restaurant restaurant:fenye.getList()) {
+                restaurant.setCommentcount(restaurantService.selectCountComment(restaurant.getRname()));
+            }
+            request.getSession().setAttribute("fenye",fenye);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return "main1";
+    }
+    /**
+     * businesscenter
+     */
+    @RequestMapping("/businesscenter")
+    public String businesscenter(){
+        return "businessCenter";
+    }
+    /**
+     * businesscenter
+     */
+    @RequestMapping("/insertDish")
+    public String insertDish(){
+        return "personMessage";
+    }
 
 
 

@@ -21,15 +21,20 @@ public class UsersServiceImpl implements UsersService {
      */
     @Override
     public Users selectUsers(Users users) {
-        //TODO 数组越界异常
-        return usersDao.selectUsers(users).get(0);
+        return usersDao.selectUsers(users);
     }
+
+    @Override
+    public Users selectUsername(Users users) {
+        return usersDao.selectUsername(users);
+    }
+
     /**
      * 验证用户名
      */
     @Override
     public boolean selectTel(Users users) {
-        List<Users> users1 = usersDao.selectUsers(users);
+        List<Users> users1 = usersDao.selectTel(users);
         return users1.size() == 0;
     }
     /**
@@ -37,9 +42,9 @@ public class UsersServiceImpl implements UsersService {
      */
     @Override
     public boolean selectPassword(Users users) {
-        List<Users> users1 = usersDao.selectUsers(users);
-        if (users1.size() != 0) {
-            return users1.get(0).getTel().equals(users.getTel());
+        Users users1 = usersDao.selectUsers(users);
+        if (users1 != null) {
+            return true;
         }
         return false;
     }

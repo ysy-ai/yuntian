@@ -95,7 +95,7 @@
 <body>
 <div class="pop">
     <div class="pop-wp">
-        <a href="businessCenter.jsp" class="pop-close">商家中心</a>
+        <a href="businesscenter" class="pop-close">商家中心</a>
         <form action="/registerRestaurant" method="post" enctype="multipart/form-data">
             <div class="account-form">
                 <input type="file" name="file" placeholder="选择本地照片" class="account-input">
@@ -107,6 +107,8 @@
                 <input type="text" name="tel" value="${tel}" class="account-input">
                 <div class="account-line"></div>
                 <input type="text" name="perprice" placeholder="人均价格" class="account-input">
+                <div class="account-line"></div>
+                <input type="text" name="type" placeholder="餐馆类型" class="account-input">
                 <div class="account-line"></div>
                 <div style="width: 100%;height: 10px"></div>
                 ${success}

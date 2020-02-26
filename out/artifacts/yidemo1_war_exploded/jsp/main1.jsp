@@ -18,9 +18,9 @@
 <div style="margin-left: 350px;width: 1100px;height: 260px;border: #A9A9A9 solid 1px;float: left">
     <div style="margin-left: 20px;width: 130px;height: 130px;line-height: 130px;float: left">分类</div>
     <div style="width: 950px;height: 130px;line-height: 130px;border-bottom: #A9A9A9 solid 1px;float: left">
-        <c:forEach var="cuidsines" items="${cuidsines}">
-            <a href="getRestauantBycuidisine?pageNow=1&name=${cuidsines.cname}&sign=cu"
-               style="width: 80px;height: 30px;float: left;text-decoration: none;color: black">${cuidsines.cname}</a>
+        <c:forEach var="cuidsine" items="${cuidsines}">
+            <a href="getRestauantBycuidisine?pageNow=1&name=${cuidsine.cname}&sign=cu"
+               style="width: 80px;height: 30px;float: left;text-decoration: none;color: black">${cuidsine.cname}</a>
         </c:forEach>
     </div>
     <div style="margin-left: 20px;width: 130px;height: 130px;line-height: 130px;float: left">地区</div>
@@ -51,7 +51,7 @@
                         </div>
                 </div>
             </c:forEach>
-
+            <h3 style="float: left;margin-left: 350px">${noMessage}</h3>
             <div style="margin-top: 30px;margin-top: 20px;float: left">
             <c:if test="${fenye.pageNow>1 }">
                 [<a href="getRestauantBycuidisine?pageNow=${fenye.pageNow-1 }">上一页</a>]
@@ -71,6 +71,7 @@
             </c:forEach>
 
             <c:choose>
+                <c:when test="${fenye.page eq 0}"></c:when>
                 <c:when test="${fenye.pageNow>=fenye.page }">
                     [<a href="getRestauantBycuidisine?pageNow=1">下一页</a>]
                 </c:when>

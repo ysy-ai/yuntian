@@ -21,13 +21,25 @@
             t--; // 计数器递减
         }
     </script>
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+        body {
+            display: flex;
+            align-items: center;
+            margin-left: 40%;
+        }
+    </style>
 </head>
 
 <body>
-<div style="text-align: center;align-items: center">
-<a href="index.jsp">删除成功，立即退出...</a>
-<br>
-<span id="show">4秒后自动退出...</span>
+<div>
+    <a href="exit"><h1 style="text-decoration: none;color: black;">删除成功，立即退出...</h1></a>
+    <br>
+    <span id="show"><h1>4秒后自动退出...</h1></span>
 </div>
 </body>
 </html>

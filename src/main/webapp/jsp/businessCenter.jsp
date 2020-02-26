@@ -62,7 +62,7 @@
         <h2 class="gradient-text gradient-text-one"> </h2>
         <h2 class="gradient-text gradient-text-one"> </h2>
         <h2 class="gradient-text gradient-text-one"> </h2>
-        <a href="jsp/registerRestaurant.jsp">
+        <a href="registerRestaurantcenter">
         <h6 style="font-size: 50px" class="gradient-text gradient-text-one">商</h6>
         <h6 style="font-size: 50px" class="gradient-text gradient-text-one">家</h6>
         <h6 style="font-size: 50px" class="gradient-text gradient-text-one">注</h6>
@@ -73,7 +73,7 @@
         <h2 class="gradient-text gradient-text-one"> </h2>
         <h2 class="gradient-text gradient-text-one"> </h2>
         <h2 class="gradient-text gradient-text-one"> </h2>
-        <a href="/merchantDetails">
+        <a href="merchantDetails">
         <h6 style="font-size: 50px" class="gradient-text gradient-text-one">商</h6>
         <h6 style="font-size: 50px" class="gradient-text gradient-text-one">家</h6>
         <h6 style="font-size: 50px" class="gradient-text gradient-text-one">详</h6>
@@ -96,7 +96,7 @@
         <h2 class="gradient-text gradient-text-one"> </h2>
         <h2 class="gradient-text gradient-text-one"> </h2>
         <h2 class="gradient-text gradient-text-one"> </h2>
-        <a href="../index.jsp">
+        <a href="exit">
         <h6 style="font-size: 50px" class="gradient-text gradient-text-one">退</h6>
         <h6 style="font-size: 50px" class="gradient-text gradient-text-one">出</h6>
         </a><br>
