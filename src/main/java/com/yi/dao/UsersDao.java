@@ -18,6 +18,7 @@ public interface UsersDao {
      * @return Users 用户实体类
      */
     List<Users> selectTel(Users users);
+    Users selectTels(Users users);
     Users selectUsers(Users users);
     Users selectUsername(Users users);
     /**

@@ -26,7 +26,7 @@
     <div style="height: 100px;">
         <img style="position:absolute;left:350px;top:70px" alt="" src="">
         <form style="position:absolute;left:660px;top:75px;height: 30px;width: 500px" action="selectRestaurantByRnameAndDishname?pageNow=1&cityname=${city}" method="post">
-            <input style="height: 30px;width: 400px;margin-bottom: 20px" type="text" name="rname" placeholder="搜索菜名或餐馆" value="">
+            <input style="height: 30px;width: 400px;margin-bottom: 20px" type="text" name="rname" placeholder="搜索餐馆" value="">
             <input type="submit" value="搜索">
         </form>
     </div>

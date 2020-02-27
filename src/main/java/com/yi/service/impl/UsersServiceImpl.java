@@ -37,6 +37,12 @@ public class UsersServiceImpl implements UsersService {
         List<Users> users1 = usersDao.selectTel(users);
         return users1.size() == 0;
     }
+
+    @Override
+    public Users selectTels(Users users) {
+        return usersDao.selectTels(users);
+    }
+
     /**
      * 验证密码
      */

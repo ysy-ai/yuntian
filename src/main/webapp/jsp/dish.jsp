@@ -14,8 +14,8 @@
 </head>
 <body>
 <jsp:include page="main.jsp"></jsp:include>
+<%@ page isELIgnored="false" %>
 <div style="margin-left: 350px;margin-top: 40px;width: 800px;line-height: 60px;border: 1px silver solid;float: left">
-    ${false}
     <c:forEach var="dish" items="${dishes}">
         <div style="width: 760px;height: 220px;margin-top: 20px;margin-left: 20px;border-bottom: 1px silver solid">
             <img style="width: 200px;height: 200px;float: left" src="${dish.pictureUrl}">

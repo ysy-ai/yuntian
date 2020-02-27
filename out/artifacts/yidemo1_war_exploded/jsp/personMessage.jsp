@@ -56,25 +56,19 @@
     </div>
     <form action="updatePersonMessage" method="post">
         <div style="width: 750px;height: 100px;line-height: 100px;margin-left: 25px;border-bottom: 1px silver solid">
-            昵称　　<input type="text" name="username" value="${userss.username}"
+            昵称　　<input type="text" name="username" placeholder="${userss.username}"
                        style="height: 50px;width: 500px;margin-left: 20px;border-left: 1px silver solid"/><input
                 type="submit" value="修改"
                 style="width: 80px;height: 40px;margin-left: 50px;background-color: sandybrown"/>
         </div>
         <div style="width: 750px;height: 100px;line-height: 100px;margin-left: 25px;border-bottom: 1px silver solid">
-            生日　　<input type="text" name="birthday" value="${userss.birthday}"
-                       style="height: 50px;width: 500px;margin-left: 20px;border-left: 1px silver solid"/><input
-                type="submit" value="修改"
-                style="width: 80px;height: 40px;margin-left: 50px;background-color: sandybrown"/>
-        </div>
-        <div style="width: 750px;height: 100px;line-height: 100px;margin-left: 25px;border-bottom: 1px silver solid">
-            换绑手机<input type="text" name="tel" value="${userss.tel}"
+            生日　　<input type="text" name="birthday" placeholder="${userss.birthday}"
                        style="height: 50px;width: 500px;margin-left: 20px;border-left: 1px silver solid"/><input
                 type="submit" value="修改"
                 style="width: 80px;height: 40px;margin-left: 50px;background-color: sandybrown"/>
         </div>
         <div style="width: 750px;height: 100px;line-height: 100px;margin-left: 25px;">
-            登录密码<input type="text" name="password" value="${userss.password}"
+            登录密码<input type="text" name="password" placeholder="${userss.password}"
                        style="height: 50px;width: 500px;margin-left: 20px;border-left: 1px silver solid"/><input
                 type="submit" value="修改"
                 style="width: 80px;height: 40px;margin-left: 50px;background-color: sandybrown"/>

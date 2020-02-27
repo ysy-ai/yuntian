@@ -5,6 +5,9 @@
     <select id="selectTel" parameterType="Users" resultType="Users">
         select * from user where  tel = #{tel}
     </select>
+    <select id="selectTels" parameterType="Users" resultType="Users">
+        select * from user where  tel = #{tel}
+    </select>
     <select id="selectUsers" parameterType="Users" resultType="Users">
         select * from user where tel = #{tel} AND password = #{password}
     </select>

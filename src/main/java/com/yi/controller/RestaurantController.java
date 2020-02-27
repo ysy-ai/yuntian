@@ -117,7 +117,7 @@ public class RestaurantController {
                 e.printStackTrace();
             }
         } else {
-            request.getSession().setAttribute("false", "请先登录");
+            request.getSession().setAttribute("false", "请先登录!!!");
             return "dish";
         }
         return "order";

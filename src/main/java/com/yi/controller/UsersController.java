@@ -81,7 +81,8 @@ public class UsersController {
                 users.setStatus(users1.getStatus());
                 if (users1.getUsername()==null) {
                     users.setUsername(users.getTel());
-                }else{
+                }
+                if(users1.getUsername()!=null&&!users1.getUsername().isEmpty()&&!"".equals(users1.getUsername())){
                     users.setUsername(users1.getUsername());
                 }
                 usersService.updateUsers(users);
@@ -110,7 +111,7 @@ public class UsersController {
         System.out.println(r+"pattern");
         // 现在创建 matcher 对象
         Matcher m = r.matcher(users.getTel());
-        if(m.find()==true){
+        if(m.find()){
             if (usersService.selectTel(users)) {
                 if(users.getPassword().equals(users.getPasswords())){
                     if(users.getStatus()!=null){
@@ -124,7 +125,7 @@ public class UsersController {
                 return "register";
             }
         }
-        if(m.find()==false){
+        if(!m.find()){
             request.setAttribute("error", "请输入正确的账号格式!");
             return "register";
         }
@@ -138,7 +139,7 @@ public class UsersController {
     @RequestMapping("/getPersonMessage")
     public String getPersonMessage(Users users, HttpServletRequest request) {
         users.setTel((String) request.getSession().getAttribute("tel"));
-        Users userss = usersService.selectUsers(users);
+        Users userss = usersService.selectTels(users);
         request.getSession().setAttribute("userss", userss);
         return "personMessage";
     }
@@ -147,8 +148,6 @@ public class UsersController {
      */
     @RequestMapping("/upload")
     public String upload(MultipartFile file, HttpServletRequest request,Users users1) {
-        // 获得原始文件名
-        String fileName = file.getOriginalFilename();
         // 新文件名
         String newFileName = request.getSession().getAttribute("tel") + ".jpg";
         // 获得项目的路径
@@ -187,31 +186,27 @@ public class UsersController {
      */
     @RequestMapping("/updatePersonMessage")
     public String updatePersonMessage(Users users, HttpServletRequest request) {
-        Users users2 = new Users();
-        users2.setTel((String) request.getSession().getAttribute("tel"));
-        if (users.getUsername()!=null) {
-            Users userss = usersService.selectUsers(users2);
-            userss.setUsername(users.getUsername());
-            usersService.updateUsers(userss);
+        users.setTel((String) request.getSession().getAttribute("tel"));
+        if (users.getUsername()!=null&&!users.getUsername().isEmpty()&&!"".equals(users.getUsername())) {
+            Users usersss = usersService.selectTels(users);
+            usersss.setUsername(users.getUsername());
+            usersService.updateUsers(usersss);
+            Users userss = usersService.selectTels(users);
             request.getSession().setAttribute("userss",userss);
         }
-        if (users.getBirthday()!=null) {
-            Users userss = usersService.selectUsers(users2);
-            userss.setBirthday(users.getBirthday());
-            usersService.updateUsers(userss);
+        if (users.getBirthday()!=null&&!users.getBirthday().isEmpty()&&!"".equals(users.getBirthday())) {
+            Users usersss = usersService.selectTels(users);
+            usersss.setBirthday(users.getBirthday());
+            usersService.updateUsers(usersss);
+            Users userss = usersService.selectTels(users);
             request.getSession().setAttribute("userss",userss);
         }
-        if (users.getTel()!=null) {
-            Users userss = usersService.selectUsers(users2);
-            userss.setTel(users.getTel());
-            usersService.updateUsers(userss);
+        if (users.getPassword()!=null&&!users.getPassword().isEmpty()&&!"".equals(users.getPassword())) {
+            Users usersss = usersService.selectTels(users);
+            usersss.setPassword(users.getPassword());
+            usersService.updateUsers(usersss);
+            Users userss = usersService.selectTels(users);
             request.getSession().setAttribute("userss",userss);
-        }
-        if (users.getPassword()!=null) {
-            Users userss = usersService.selectUsers(users2);
-            userss.setPassword(users.getPassword());
-            usersService.updateUsers(userss);
-            request.getSession().setAttribute("users",userss);
         }
         return "personMessage";
     }
@@ -220,7 +215,7 @@ public class UsersController {
      */
     @RequestMapping("/deleteUser")
     public String deleteUser(HttpServletRequest request){
-        if((String) request.getSession().getAttribute("tel")==null){
+        if(request.getSession().getAttribute("tel")==null){
             request.getSession().setAttribute("error","请先登录!");
             return "login";
         }

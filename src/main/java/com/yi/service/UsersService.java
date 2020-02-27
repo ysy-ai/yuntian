@@ -1,6 +1,9 @@
 package com.yi.service;
 
 import com.yi.po.Users;
+
+import java.util.List;
+
 /**
  * @author yisy
  */
@@ -19,6 +22,7 @@ public interface UsersService {
      * @return boolean
      */
     boolean selectTel(Users users);
+    Users selectTels(Users users);
     /**
      * 验证密码
      * @param users 用户实体类
